@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QTUXATHON 3.0 – Break The Limits</title>
+    <link rel="icon" href="https://placehold.co/32x32/ff0000/ffffff?text=Q3">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Global Styles */
+        .header-content-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .header-left-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-bg: #000000;
+            --secondary-bg: #1a1a1a;
+            --accent-red: #ff0000;
+            --accent-white: #ffffff;
+            --text-light: #f0f0f0;
+            --text-dark: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            /* Add padding to prevent content from being hidden by the fixed header */
+            padding-top: 100px;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-white);
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--accent-red);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        /* Generic Call-to-Action Button */
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-red);
+            color: var(--accent-white);
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent-red);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: var(--accent-white);
+            box-shadow: 0 0 15px var(--accent-red), 0 0 25px var(--accent-red);
+            transform: translateY(-3px);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        /* --- REDESIGNED HEADER --- */
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            height: 60px;
+            padding: 0 20px;
+            box-sizing: border-box;
+
+            /* Liquid Glass Effect */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+
+            /* Flexbox for a clean layout */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Space between logo and button */
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-white);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: text-shadow 0.3s ease;
+        }
+        
+        .logo:hover {
+            text-shadow: 0 0 5px var(--accent-red);
+        }
+
+        .logo span {
+            color: var(--accent-red);
+        }
+
+        /* Dedicated styling for the header's 'Register Now' button */
+        .header-btn {
+            background-color: var(--accent-red);
+            color: var(--accent-white);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            white-space: nowrap; /* Prevents text from wrapping on smaller screens */
+        }
+
+        .header-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--accent-red), 0 0 25px rgba(255, 0, 0, 0.5);
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            margin-left: auto; /* Pushes the nav to the far right */
+        }
+
+        .nav-menu li {
+            margin-left: 30px;
+        }
+
+        .nav-menu a {
+            color: var(--accent-white);
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-red);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent-red);
+            text-shadow: 0 0 5px var(--accent-red);
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--accent-white);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--primary-bg);
+        }
+
+        .hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: var(--accent-white);
+            max-width: 800px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--accent-red);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--text-light);
+        }
+
+        /* About Section */
+        .about {
+            background-color: var(--secondary-bg);
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 2.8rem;
+            color: var(--accent-red);
+            margin-bottom: 40px;
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .about-text {
+            flex: 2;
+            min-width: 300px;
+            text-align: left;
+            padding-right: 20px;
+        }
+
+        .about-highlights {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .highlight-card {
+            background-color: var(--primary-bg);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .highlight-card h3 {
+            color: var(--accent-red);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .highlight-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        /* Timeline Section - Redesigned (Vertical) */
+        .timeline {
+            background-color: var(--primary-bg);
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .timeline h2 {
+            font-size: 2.8rem;
+            color: var(--accent-red);
+            margin-bottom: 20px;
+        }
+
+        .timeline .subheading {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 60px;
+        }
+
+        .vertical-timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .vertical-timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-image: repeating-linear-gradient(to bottom, var(--accent-white) 0px, var(--accent-white) 3px, transparent 3px, transparent 10px);
+            top: 0;
+            height: 100%;
+            left: 50%;
+            margin-left: -1px;
+            z-index: 1;
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 100%;
+            margin-bottom: 50px;
+            clear: both;
+            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .event-marker {
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            border: 4px solid var(--accent-white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            color: var(--accent-white);
+            box-shadow: 0 0 0 10px var(--primary-bg), 0 0 15px rgba(255, 0, 0, 0.7);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            transition: all 0.3s ease;
+        }
+
+        .event-marker i {
+            pointer-events: none;
+        }
+
+        .event-details {
+            background-color: var(--secondary-bg);
+            padding: 25px 30px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+            width: calc(50% - 60px);
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(odd) .event-details {
+            margin-right: 60px;
+        }
+
+        .timeline-item:nth-child(even) .event-details {
+            margin-left: 60px;
+        }
+
+        .event-details .event-date {
+            font-weight: 700;
+            color: var(--accent-white);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .event-details .event-title {
+            color: var(--accent-red);
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .event-details .event-description {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        /* Live Timeline States */
+        .timeline-item.past .event-details {
+            opacity: 0.6;
+            transform: scale(0.98);
+            box-shadow: none;
+            border-color: rgba(255, 0, 0, 0.1);
+        }
+        .timeline-item.past .event-marker {
+            opacity: 0.6;
+            box-shadow: none;
+            background-color: rgba(255, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translate(-50%, -50%) scale(0.9);
+        }
+
+        .timeline-item.current .event-details {
+            border-color: var(--accent-red);
+            box-shadow: 0 0 20px var(--accent-red), 0 0 30px rgba(255, 0, 0, 0.7);
+            transform: scale(1.02);
+        }
+        .timeline-item.current .event-marker {
+            background-color: var(--accent-red);
+            border-color: var(--accent-white);
+            box-shadow: 0 0 0 10px var(--primary-bg), 0 0 25px rgba(255, 0, 0, 1);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* Hover effects for timeline events */
+        .timeline-item:not(.current):hover .event-details {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+        }
+        .timeline-item:not(.current):hover .event-marker {
+            transform: translate(-50%, -50%) scale(1.05);
+            box-shadow: 0 0 0 10px var(--primary-bg), 0 0 20px rgba(255, 0, 0, 0.8);
+        }
+
+
+        /* FAQ Section */
+        .faq {
+            background-color: var(--secondary-bg);
+            text-align: center;
+        }
+
+        .faq h2 {
+            font-size: 2.8rem;
+            color: var(--accent-red);
+            margin-bottom: 40px;
+        }
+
+        .accordion-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .accordion-item {
+            background-color: var(--primary-bg);
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+            background-color: var(--primary-bg);
+            color: var(--accent-red);
+            font-size: 1.25rem;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
+        }
+
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            color: var(--text-light);
+            background-color: var(--primary-bg);
+        }
+
+        .accordion-content p {
+            padding-bottom: 20px;
+        }
+
+        /* Experts & Judges Section */
+        .experts-judges {
+            background-color: var(--primary-bg);
+            text-align: center;
+        }
+
+        .experts-judges h2 {
+            font-size: 2.8rem;
+            color: var(--accent-red);
+            margin-bottom: 40px;
+        }
+
+        .experts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding-top: 20px;
+        }
+
+        .expert-card {
+            background-color: var(--secondary-bg);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expert-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 0, 0, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: scale(0);
+            z-index: 0;
+        }
+
+        .expert-card:hover::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .expert-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 25px var(--accent-red), 0 0 40px rgba(255, 0, 0, 0.5);
+        }
+
+        .expert-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 3px solid var(--accent-red);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .expert-card:hover .expert-photo {
+            border-color: var(--accent-white);
+            box-shadow: 0 0 25px var(--accent-white), 0 0 40px rgba(255, 255, 255, 0.5);
+        }
+
+        .expert-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent-white);
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .expert-title {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .expert-social a {
+            color: var(--accent-white);
+            font-size: 1.5rem;
+            margin: 0 8px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .expert-social a:hover {
+            color: var(--accent-red);
+            transform: scale(1.1);
+        }
+
+        /* Team Section */
+        .team {
+            background-color: var(--secondary-bg);
+            text-align: center;
+        }
+
+        .team h2 {
+            font-size: 2.8rem;
+            color: var(--accent-red);
+            margin-bottom: 40px;
+        }
+
+        .team-category h3 {
+            font-size: 2rem;
+            color: var(--accent-white);
+            margin-top: 40px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--accent-red);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            padding-top: 20px;
+            margin-bottom: 50px;
+        }
+
+        .team-member {
+            background-color: var(--primary-bg);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-member::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 0, 0, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: scale(0);
+            z-index: 0;
+        }
+
+        .team-member:hover::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .team-member:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 25px var(--accent-red), 0 0 40px rgba(255, 0, 0, 0.5);
+        }
+
+        .member-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 4px solid var(--accent-red);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .team-member:hover .member-photo {
+            border-color: var(--accent-white);
+            box-shadow: 0 0 25px var(--accent-white), 0 0 40px rgba(255, 255, 255, 0.5);
+        }
+
+        .member-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-white);
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .member-role {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .member-social a {
+            color: var(--accent-white);
+            font-size: 1.3rem;
+            margin: 0 8px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .member-social a:hover {
+            color: var(--accent-red);
+            transform: scale(1.1);
+        }
+
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--accent-red);
+            color: var(--accent-white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            z-index: 999;
+        }
+
+        #back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-5px);
+        }
+
+        #back-to-top:hover {
+            box-shadow: 0 0 25px rgba(255, 0, 0, 1);
+            transform: translateY(-8px) scale(1.05);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 0, 0, 0.3);
+            font-size: 0.9rem;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer .social-links a {
+            color: var(--accent-white);
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .footer .social-links a:hover {
+            color: var(--accent-red);
+            transform: scale(1.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .header {
+                height: auto;
+                top: 10px;
+                padding: 15px 20px;
+                border-radius: 15px;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .header-left {
+                flex-grow: 1;
+                justify-content: space-between;
+                width: 100%; /* Take full width on mobile */
+                margin-bottom: 10px;
+            }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                background-color: rgba(26, 26, 26, 0.9);
+                padding: 10px 0;
+                margin-left: 0;
+                border-radius: 10px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu li {
+                margin: 10px 0;
+            }
+
+            .header-btn {
+                order: 2; /* Move button to a predictable spot */
+            }
+            
+            .hamburger {
+                display: block;
+                order: 1;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-text {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+
+            /* Timeline Responsive Adjustments */
+            .vertical-timeline-container {
+                padding: 0 10px;
+            }
+
+            .vertical-timeline-container::after {
+                left: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: row !important;
+                justify-content: flex-start;
+                padding-left: 60px;
+            }
+
+            .timeline-item:nth-child(odd) .event-details,
+            .timeline-item:nth-child(even) .event-details {
+                margin-right: 0;
+                margin-left: 0;
+                width: calc(100% - 60px);
+            }
+
+            .event-marker {
+                left: 30px;
+                transform: translate(-50%, -50%);
+            }
+
+            .event-details {
+                padding: 20px 25px;
+            }
+            .event-details .event-title {
+                font-size: 1.4rem;
+            }
+            .event-details .event-description {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .about h2, .timeline h2, .faq h2, .experts-judges h2, .team h2 {
+                font-size: 2.2rem;
+            }
+
+            .highlight-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .accordion-header {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+
+            .expert-photo, .member-photo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .expert-name, .member-name {
+                font-size: 1.2rem;
+            }
+
+            #back-to-top {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .timeline .subheading {
+                font-size: 1.1rem;
+            }
+            .event-marker {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            .event-details .event-title {
+                font-size: 1.2rem;
+            }
+            .event-details .event-description {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .about h2, .timeline h2, .faq h2, .experts-judges h2, .team h2 {
+                font-size: 1.8rem;
+            }
+
+            .experts-grid, .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .expert-card, .team-member {
+                padding: 20px;
+            }
+
+            .timeline-item {
+                padding-left: 70px;
+            }
+            .timeline-item:nth-child(odd) .event-details,
+            .timeline-item:nth-child(even) .event-details {
+                width: calc(100% - 70px);
+            }
+            .event-marker {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+                left: 25px;
+            }
+            .vertical-timeline-container::after {
+                left: 25px;
+            }
+            .nav-menu a {
+            white-space: nowrap; /* Prevents line break */
+            }
+            .event-marker.pacman {
+                background: transparent;
+                border: none;
+                box-shadow: none;
+                width: 40px;
+                height: 40px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 3;
+            }
+
+            .event-marker.pacman::before {
+                content: "";
+                width: 0;
+                height: 0;
+                border-top: 20px solid yellow;
+                border-right: 20px solid transparent;
+                border-bottom: 20px solid yellow;
+                border-left: 20px solid yellow;
+                border-radius: 50%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                animation: chomp 0.4s infinite alternate;
+            }
+
+            @keyframes chomp {
+                0% {
+                    clip-path: polygon(0% 0%, 100% 20%, 100% 80%, 0% 100%);
+                }
+                100% {
+                    clip-path: polygon(0% 20%, 100% 50%, 0% 80%);
+                }
+            }
+            
+
+
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content-wrapper">
+            <div class="header-left-group">
+                <a href="#" class="logo">QTUXATHON <span>3.0</span></a>
+                <!-- <a href="#" class="header-btn">Register Now</a> -->
+            </div>
+            <nav class="header-nav">
+                <ul class="nav-menu">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#problem-statements">Problem Statements</a></li>
+                    <li><a href="#timeline">Timeline</a></li>
+                    <li><a href="#experts-judges">Experts & Judges</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#team">Team</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section id="hero" class="hero">
+        <canvas id="hero-particles" class="hero-canvas"></canvas>
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+            <h1>QTUXATHON <span>3.0</span> – Break The Limits</h1>
+            <p>Organized by SMC Society – Dept. of Cybersecurity</p>
+            <a href="#" class="btn">Register Now</a>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2 data-aos="fade-down">About QTUXATHON 3.0</h2>
+            <div class="about-content">
+                <div class="about-text" data-aos="fade-right" data-aos-delay="200">
+                    <p>QTUXATHON 3.0 is a national-level hackathon designed to challenge and inspire the brightest minds in technology. Building on the success of our previous editions, this year's hackathon focuses on pushing the boundaries of innovation in cybersecurity, AI, blockchain, and sustainable tech.</p>
+                    <p>Participants will have the opportunity to collaborate, learn from experts, and develop groundbreaking solutions to real-world problems. Whether you're a seasoned coder or a budding enthusiast, QTUXATHON 3.0 provides a platform to showcase your skills, network with peers, and make a tangible impact.</p>
+                    <p>Join us for an exhilarating experience filled with intense coding, creative problem-solving, and unforgettable moments. Let's break the limits together!</p>
+                </div>
+                <div class="about-highlights" data-aos="fade-left" data-aos-delay="400">
+                    <div class="highlight-card">
+                        <h3>Purpose</h3>
+                        <p>Foster innovation and problem-solving in tech, especially cybersecurity.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3>Who Can Participate?</h3>
+                        <p>Students, developers, and tech enthusiasts from all backgrounds.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3>What's Unique?</h3>
+                        <p>Focus on cutting-edge themes, mentorship, and real-world impact.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="problem-statements" class="problem-statements">
+        <div class="container">
+            <h2 data-aos="fade-down">Problem Statements</h2>
+            <p data-aos="fade-up" data-aos-delay="200" style="text-align: center; font-size: 1.1rem; color: var(--text-light);">
+                Detailed problem statements will be released soon. Stay tuned for challenges in Cybersecurity, AI/ML, Blockchain, and Sustainable Technologies!
+            </p>
+            <div style="text-align: center; margin-top: 40px;" data-aos="zoom-in" data-aos-delay="300">
+                <a href="#" class="btn">View Past Problems</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline" class="timeline">
+        <div class="container">
+            <h2 data-aos="fade-down">Event Timeline</h2>
+            <p class="subheading" data-aos="fade-up" data-aos-delay="100">Here's what your journey will look like.</p>
+            <div class="vertical-timeline-container">
+                <div class="timeline-line"></div>
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="100" data-event-start="2025-08-07" data-event-end="2025-08-07">
+                    <div class="event-details">
+                        <div class="event-date">Aug 7, 2025</div>
+                        <h4 class="event-title">Registration Open</h4>
+                        <p class="event-description">Register for one of the biggest in-person hackathons in the world.</p>
+                    </div>
+                    <div class="event-marker"><i class="fas fa-file-alt"></i></div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="200" data-event-start="2025-08-07" data-event-end="2025-08-14">
+                    <div class="event-details">
+                        <div class="event-date">Aug 7 - Aug 14, 2025</div>
+                        <h4 class="event-title">Form a Team</h4>
+                        <p class="event-description">Find collaborators who match your ambition and complement your skills. For a team of 2-5 members.</p>
+                    </div>
+                    <div class="event-marker"><i class="fas fa-users"></i></div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="300" data-event-start="2025-08-10" data-event-end="2025-08-10">
+                    <div class="event-details">
+                        <div class="event-date">Aug 10, 2025</div>
+                        <h4 class="event-title">Round 1 Begins (Online Round)</h4>
+                        <p class="event-description">Kickstart your preparation with our expert-led workshops on key technologies.</p>
+                    </div>
+                    <div class="event-marker"><i class="fas fa-chalkboard-teacher"></i></div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="400" data-event-start="2025-08-14" data-event-end="2025-08-14">
+                    <div class="event-details">
+                        <div class="event-date">Aug 14, 2025 (Night)</div>
+                        <h4 class="event-title">Idea Submission Deadline</h4>
+                        <p class="event-description">Submit your innovative ideas and get a chance to be shortlisted for the main event.</p>
+                    </div>
+                    <div class="event-marker"><i class="fas fa-lightbulb"></i></div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="500" data-event-start="2025-08-18" data-event-end="2025-08-18">
+                    <div class="event-details">
+                        <div class="event-date">Aug 18, 2025</div>
+                        <h4 class="event-title">Shortlist Announcement</h4>
+                        <p class="event-description">We will announce the shortlisted teams for the in-person hackathon.</p>
+                    </div>
+                    <div class="event-marker"><i class="fas fa-bullhorn"></i></div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="600" data-event-start="2025-09-03" data-event-end="2025-09-04">
+                    <div class="event-details">
+                        <div class="event-date">Sep 3-4, 2025</div>
+                        <h4 class="event-title">Hack Day</h4>
+                        <p class="event-description">The moment you've all been waiting for. Let the 36-hour coding marathon begin!</p>
+                    </div>
+                    <div class="event-marker"><i class="fas fa-code"></i></div>
+                </div>
+                 <div class="timeline-item" data-aos="fade-right" data-aos-delay="700" data-event-start="2025-09-04" data-event-end="2025-09-04">
+                    <div class="event-details">
+                        <div class="event-date">Sep 4, 2025</div>
+                        <h4 class="event-title">Winners Announced</h4>
+                        <p class="event-description">Celebrate your achievements as we announce the winners and distribute prizes.</p>
+                    </div>
+                    <div class="event-marker"><i class="fas fa-trophy"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 data-aos="fade-down">Frequently Asked Questions</h2>
+            <div class="accordion-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        Who can participate in QTUXATHON 3.0?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>QTUXATHON 3.0 is open to all college students (undergraduate and postgraduate) from any discipline, as well as recent graduates and tech enthusiasts. If you have a passion for innovation and problem-solving, you're welcome!</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        Is the hackathon online or offline?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>QTUXATHON 3.0 will be a hybrid event. The initial rounds and idea submission will be online, while the final hack day and judging will be conducted offline at a designated venue. More details on the venue will be shared soon.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        What is the maximum team size?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Teams can consist of a minimum of 2 and a maximum of 4 members. We encourage diverse teams with varied skill sets to maximize creativity and collaboration.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        Do I get a certificate for participation?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Yes, all participants who successfully submit a valid project will receive a digital certificate of participation. Winners and top teams will receive additional certificates and prizes.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        What are the themes for the hackathon?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>The primary themes for QTUXATHON 3.0 include Cybersecurity, Artificial Intelligence & Machine Learning, Blockchain & Web3, and Sustainable Technologies. Specific problem statements within these themes will be announced shortly after registrations open.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experts-judges" class="experts-judges">
+        <div class="container">
+            <h2 data-aos="fade-down">Our Esteemed Experts & Judges</h2>
+            <div class="experts-grid">
+                <div class="expert-card" data-aos="zoom-in" data-aos-delay="100">
+                    <img src="https://placehold.co/120x120/ff0000/ffffff?text=E1" alt="Expert Photo 1" class="expert-photo">
+                    <h3 class="expert-name">Dr. Anya Sharma</h3>
+                    <p class="expert-title">Head of AI Research, TechCorp</p>
+                    <div class="expert-social">
+                        <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="expert-card" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="https://placehold.co/120x120/ff0000/ffffff?text=E2" alt="Expert Photo 2" class="expert-photo">
+                    <h3 class="expert-name">Mr. Rahul Verma</h3>
+                    <p class="expert-title">Cybersecurity Architect, InfoSec Solutions</p>
+                    <div class="expert-social">
+                        <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="expert-card" data-aos="zoom-in" data-aos-delay="300">
+                    <img src="https://placehold.co/120x120/ff0000/ffffff?text=E3" alt="Expert Photo 3" class="expert-photo">
+                    <h3 class="expert-name">Ms. Priya Singh</h3>
+                    <p class="expert-title">Blockchain Lead, CryptoInnovate</p>
+                    <div class="expert-social">
+                        <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="expert-card" data-aos="zoom-in" data-aos-delay="400">
+                    <img src="https://placehold.co/120x120/ff0000/ffffff?text=E4" alt="Expert Photo 4" class="expert-photo">
+                    <h3 class="expert-name">Dr. David Lee</h3>
+                    <p class="expert-title">Professor of Computer Science, University X</p>
+                    <div class="expert-social">
+                        <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="team">
+        <div class="container">
+            <h2 data-aos="fade-down">Meet Our Core Team</h2>
+
+            <!-- Lead Organizers -->
+            <div class="team-category">
+                <h3 data-aos="fade-up" data-aos-delay="100">Lead Organizers (7 Members)</h3>
+                <div class="team-grid">
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="100">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T1" alt="Arjun Reddy" class="member-photo">
+                        <h3 class="member-name">Arjun Reddy</h3>
+                        <p class="member-role">Lead Organizer</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T31" alt="Lead Organizer 2" class="member-photo">
+                        <h3 class="member-name">Priya Sharma</h3>
+                        <p class="member-role">Co-Organizer</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T32" alt="Lead Organizer 3" class="member-photo">
+                        <h3 class="member-name">Ravi Kumar</h3>
+                        <p class="member-role">Event Coordinator</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T33" alt="Lead Organizer 4" class="member-photo">
+                        <h3 class="member-name">Deepika Singh</h3>
+                        <p class="member-role">Partnership Lead</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="500">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T34" alt="Lead Organizer 5" class="member-photo">
+                        <h3 class="member-name">Siddharth Rao</h3>
+                        <p class="member-role">Volunteer Head</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="600">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T35" alt="Lead Organizer 6" class="member-photo">
+                        <h3 class="member-name">Ananya Mehta</h3>
+                        <p class="member-role">Operations Manager</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="700">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T36" alt="Lead Organizer 7" class="member-photo">
+                        <h3 class="member-name">Karan Desai</h3>
+                        <p class="member-role">Community Outreach</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Team -->
+            <div class="team-category">
+                <h3 data-aos="fade-up" data-aos-delay="100">Technical Team (5 Members)</h3>
+                <div class="team-grid">
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T3" alt="Vikram Kumar" class="member-photo">
+                        <h3 class="member-name">Vikram Kumar</h3>
+                        <p class="member-role">Technical Lead</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T5" alt="Technical Member 1" class="member-photo">
+                        <h3 class="member-name">Anjali Singh</h3>
+                        <p class="member-role">Software Engineer</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T6" alt="Technical Member 2" class="member-photo">
+                        <h3 class="member-name">Rohan Patel</h3>
+                        <p class="member-role">Backend Developer</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="500">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T7" alt="Technical Member 3" class="member-photo">
+                        <h3 class="member-name">Sara Khan</h3>
+                        <p class="member-role">Frontend Developer</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="600">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T8" alt="Technical Member 4" class="member-photo">
+                        <h3 class="member-name">Deepak Sharma</h3>
+                        <p class="member-role">DevOps Engineer</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MC Team -->
+            <div class="team-category">
+                <h3 data-aos="fade-up" data-aos-delay="100">MC Team (2 Members)</h3>
+                <div class="team-grid">
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T9" alt="MC Member 1" class="member-photo">
+                        <h3 class="member-name">Kavya Rao</h3>
+                        <p class="member-role">Master of Ceremonies</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T10" alt="MC Member 2" class="member-photo">
+                        <h3 class="member-name">Vivek Das</h3>
+                        <p class="member-role">Event Host</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Report & Documentation Team -->
+            <div class="team-category">
+                <h3 data-aos="fade-up" data-aos-delay="100">Report & Documentation (3 Members)</h3>
+                <div class="team-grid">
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T11" alt="R&D Member 1" class="member-photo">
+                        <h3 class="member-name">Priya Gupta</h3>
+                        <p class="member-role">Documentation Lead</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T12" alt="R&D Member 2" class="member-photo">
+                        <h3 class="member-name">Alok Singh</h3>
+                        <p class="member-role">Content Writer</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T13" alt="R&D Member 3" class="member-photo">
+                        <h3 class="member-name">Meera Devi</h3>
+                        <p class="member-role">Report Analyst</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logistics Team -->
+            <div class="team-category">
+                <h3 data-aos="fade-up" data-aos-delay="100">Logistics Team (6 Members)</h3>
+                <div class="team-grid">
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T2" alt="Sneha Gupta" class="member-photo">
+                        <h3 class="member-name">Sneha Gupta</h3>
+                        <p class="member-role">Logistics Head</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T14" alt="Logistics Member 1" class="member-photo">
+                        <h3 class="member-name">Amit Kumar</h3>
+                        <p class="member-role">Logistics Coordinator</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T15" alt="Logistics Member 2" class="member-photo">
+                        <h3 class="member-name">Pooja Sharma</h3>
+                        <p class="member-role">Venue Manager</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="500">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T16" alt="Logistics Member 3" class="member-photo">
+                        <h3 class="member-name">Rajesh Verma</h3>
+                        <p class="member-role">Resource Coordinator</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="600">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T17" alt="Logistics Member 4" class="member-photo">
+                        <h3 class="member-name">Neha Choudhary</h3>
+                        <p class="member-role">Volunteer Coordinator</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="700">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T18" alt="Logistics Member 5" class="member-photo">
+                        <h3 class="member-name">Suresh Yadav</h3>
+                        <p class="member-role">Operations Support</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Crowd Management Team -->
+            <div class="team-category">
+                <h3 data-aos="fade-up" data-aos-delay="100">Crowd Management (5 Members)</h3>
+                <div class="team-grid">
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T19" alt="CM Member 1" class="member-photo">
+                        <h3 class="member-name">Aditya Kumar</h3>
+                        <p class="member-role">Security Lead</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T20" alt="CM Member 2" class="member-photo">
+                        <h3 class="member-name">Geeta Devi</h3>
+                        <p class="member-role">Crowd Control Officer</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T21" alt="CM Member 3" class="member-photo">
+                        <h3 class="member-name">Kiran Singh</h3>
+                        <p class="member-role">Entry/Exit Management</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="500">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T22" alt="CM Member 4" class="member-photo">
+                        <h3 class="member-name">Praveen Gupta</h3>
+                        <p class="member-role">Floor Supervisor</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="600">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T23" alt="CM Member 5" class="member-photo">
+                        <h3 class="member-name">Ritu Sharma</h3>
+                        <p class="member-role">Support Staff</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Team -->
+            <div class="team-category">
+                <h3 data-aos="fade-up" data-aos-delay="100">Media Team (5 Members)</h3>
+                <div class="team-grid">
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T24" alt="Media Member 1" class="member-photo">
+                        <h3 class="member-name">Samarth Jain</h3>
+                        <p class="member-role">Media Lead</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T25" alt="Media Member 2" class="member-photo">
+                        <h3 class="member-name">Shreya Singh</h3>
+                        <p class="member-role">Photographer</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T26" alt="Media Member 3" class="member-photo">
+                        <h3 class="member-name">Varun Sharma</h3>
+                        <p class="member-role">Videographer</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="500">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T27" alt="Media Member 4" class="member-photo">
+                        <h3 class="member-name">Divya Mehta</h3>
+                        <p class="member-role">Social Media Manager</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="600">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T28" alt="Media Member 5" class="member-photo">
+                        <h3 class="member-name">Kartik Verma</h3>
+                        <p class="member-role">Content Creator</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design & Content Team -->
+            <div class="team-category">
+                <h3 data-aos="fade-up" data-aos-delay="100">Design & Content Team (3 Members)</h3>
+                <div class="team-grid">
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T4" alt="Ishita Rao" class="member-photo">
+                        <h3 class="member-name">Ishita Rao</h3>
+                        <p class="member-role">Design & Marketing Lead</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T29" alt="D&C Member 1" class="member-photo">
+                        <h3 class="member-name">Rajat Sharma</h3>
+                        <p class="member-role">Graphic Designer</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
+                        <img src="https://placehold.co/150x150/ff0000/ffffff?text=T30" alt="D&C Member 2" class="member-photo">
+                        <h3 class="member-name">Ananya Verma</h3>
+                        <p class="member-role">Content Strategist</p>
+                        <div class="member-social">
+                            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 QTUXATHON 3.0. All rights reserved.</p>
+            <p>Organized by SMC Society – Dept. of Cybersecurity</p>
+            <div class="social-links">
+                <a href="#" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="#" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <button id="back-to-top" title="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({
+                duration: 1000,
+                once: true,
+                mirror: false,
+            });
+
+            // Site load-in animation
+            document.body.classList.add('loaded');
+
+            // Call the function to update timeline status on load
+            updateTimelineStatus();
+        });
+
+        // Smooth Scroll for Navbar Links
+        document.querySelectorAll('.nav-menu a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerOffset = document.querySelector('.header').offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+
+                    const navMenu = document.querySelector('.nav-menu');
+                    if (navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                    }
+                }
+            });
+        });
+
+        // Hamburger Menu Toggle for Mobile
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const headerBtn = document.querySelector('.header-btn');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            if (navMenu.classList.contains('active')) {
+                headerBtn.style.display = 'block';
+            } else {
+                headerBtn.style.display = 'none';
+            }
+        });
+
+        // FAQ Accordion Toggle
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const accordionItem = header.closest('.accordion-item');
+                const accordionContent = accordionItem.querySelector('.accordion-content');
+                const icon = header.querySelector('i');
+
+                document.querySelectorAll('.accordion-item').forEach(item => {
+                    if (item !== accordionItem) {
+                        const otherContent = item.querySelector('.accordion-content');
+                        const otherHeader = item.querySelector('.accordion-header');
+                        const otherIcon = otherHeader.querySelector('i');
+
+                        otherContent.style.maxHeight = null;
+                        otherContent.style.paddingBottom = '0';
+                        otherHeader.classList.remove('active');
+                        otherIcon.classList.remove('fa-chevron-up');
+                        otherIcon.classList.add('fa-chevron-down');
+                    }
+                });
+
+                header.classList.toggle('active');
+                if (accordionContent.style.maxHeight) {
+                    accordionContent.style.maxHeight = null;
+                    accordionContent.style.paddingBottom = '0';
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+                    accordionContent.style.paddingBottom = '20px';
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                }
+            });
+        });
+
+        // Back to Top Button functionality
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Hero Section Particle Animation
+        const canvas = document.getElementById('hero-particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const numParticles = 200;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.color = Math.random() > 0.5 ? 'rgba(255, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)';
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < numParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connectParticles() {
+            let opacityValue = 1;
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    const distance = ((particles[a].x - particles[b].x) ** 2 + (particles[a].y - particles[b].y) ** 2) ** 0.5;
+                    if (distance < 100) {
+                        opacityValue = 1 - (distance / 100);
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${opacityValue})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            connectParticles();
+            requestAnimationFrame(animateParticles);
+        }
+
+        function updateTimelineStatus() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const timelineItems = document.querySelectorAll('.timeline-item');
+
+            timelineItems.forEach(item => {
+                const startDateStr = item.getAttribute('data-event-start');
+                const endDateStr = item.getAttribute('data-event-end');
+
+                if (startDateStr && endDateStr) {
+                    const startDate = new Date(startDateStr);
+                    startDate.setHours(0, 0, 0, 0);
+
+                    const endDate = new Date(endDateStr);
+                    endDate.setHours(23, 59, 59, 999);
+
+                    item.classList.remove('past', 'current', 'upcoming');
+
+                    if (today > endDate) {
+                        item.classList.add('past');
+                    } else if (today >= startDate && today <= endDate) {
+                        item.classList.add('current');
+                    } else {
+                        item.classList.add('upcoming');
+                    }
+                }
+            });
+        }
+
+        window.onload = function() {
+            initParticles();
+            animateParticles();
+            updateTimelineStatus();
+        };
+    </script>
+</body>
+</html>
