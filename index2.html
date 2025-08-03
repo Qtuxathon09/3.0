@@ -65,7 +65,6 @@
             overflow-x: hidden;
             opacity: 0;
             transition: opacity 1s ease-in-out;
-            /* Add padding to prevent content from being hidden by the fixed header */
             padding-top: 100px;
         }
 
@@ -314,8 +313,38 @@
 
         /* About Section */
         .about {
-            background-color: var(--secondary-bg);
+            position: relative; /* Needed for absolute positioning of background and overlay */
+            background-color: var(--secondary-bg); /* Fallback */
             text-align: center;
+            overflow: hidden; /* Ensures images don't spill outside */
+        }
+
+        .about-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover; /* Default to cover for larger screens */
+            background-position: center;
+            background-repeat: no-repeat; /* Ensure no repeat */
+            transition: background-image 1s ease-in-out; /* Smooth transition for image change */
+            z-index: 0; /* Behind content */
+        }
+
+        .about-background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark overlay for text readability */
+            z-index: 1; /* Between background and content */
+        }
+
+        .about .container {
+            position: relative; /* Ensure content is above the overlay */
+            z-index: 2;
         }
 
         .about h2 {
@@ -397,61 +426,113 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 0 20px;
+            min-height: 600px;
         }
 
-        .vertical-timeline-container::after {
-            content: '';
+        .timeline-line-background {
+            background-color: transparent;
             position: absolute;
             width: 2px;
-            background-image: repeating-linear-gradient(to bottom, var(--accent-white) 0px, var(--accent-white) 3px, transparent 3px, transparent 10px);
             top: 0;
             height: 100%;
             left: 50%;
-            margin-left: -1px;
+            transform: translateX(-50%);
             z-index: 1;
         }
 
+        #timeline-dots-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+            width: 2px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .timeline-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #333;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 1;
+            transition: opacity 0.1s linear, background-color 0.3s ease;
+            will-change: opacity, background-color;
+        }
+
+        .timeline-dot.main-dot {
+            width: 15px;
+            height: 15px;
+            background-color: #333;
+        }
+
+        .timeline-dot.eaten {
+            opacity: 0;
+        }
+
+        .timeline-dot.passed {
+            background-color: var(--accent-red);
+        }
+
+
+        /* New styles for pacman-marker */
+        .pacman-marker {
+            width: 60px;
+            height: 60px;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            transition: top 0.1s linear;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pacman-marker::before {
+            content: "";
+            width: 0;
+            height: 0;
+            border-top: 30px solid var(--accent-red);
+            border-right: 30px solid transparent;
+            border-bottom: 30px solid var(--accent-red);
+            border-left: 30px solid var(--accent-red);
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+            transform: rotate(0deg);
+        }
+
+        /* Adjust timeline-item positioning relative to the central line */
         .timeline-item {
             position: relative;
             width: 100%;
             margin-bottom: 50px;
             clear: both;
-            transition: all 0.5s ease;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding-left: 0;
+            padding-right: 0;
         }
 
         .timeline-item:nth-child(odd) {
             flex-direction: row;
+            justify-content: flex-start;
         }
 
         .timeline-item:nth-child(even) {
             flex-direction: row-reverse;
-        }
-
-        .event-marker {
-            width: 60px;
-            height: 60px;
-            background-color: var(--accent-red);
-            border-radius: 50%;
-            border: 4px solid var(--accent-white);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.8rem;
-            color: var(--accent-white);
-            box-shadow: 0 0 0 10px var(--primary-bg), 0 0 15px rgba(255, 0, 0, 0.7);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 3;
-            transition: all 0.3s ease;
-        }
-
-        .event-marker i {
-            pointer-events: none;
+            justify-content: flex-start;
         }
 
         .event-details {
@@ -460,7 +541,7 @@
             border-radius: 8px;
             border: 1px solid rgba(255, 0, 0, 0.3);
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
-            width: calc(50% - 60px);
+            width: calc(50% - 30px);
             text-align: left;
             transition: all 0.3s ease;
             position: relative;
@@ -468,67 +549,16 @@
         }
 
         .timeline-item:nth-child(odd) .event-details {
-            margin-right: 60px;
+            margin-right: 30px;
         }
 
         .timeline-item:nth-child(even) .event-details {
-            margin-left: 60px;
+            margin-left: 30px;
         }
 
-        .event-details .event-date {
-            font-weight: 700;
-            color: var(--accent-white);
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
-
-        .event-details .event-title {
-            color: var(--accent-red);
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-            line-height: 1.3;
-        }
-
-        .event-details .event-description {
-            font-size: 0.95rem;
-            color: var(--text-light);
-        }
-
-        /* Live Timeline States */
-        .timeline-item.past .event-details {
-            opacity: 0.6;
-            transform: scale(0.98);
-            box-shadow: none;
-            border-color: rgba(255, 0, 0, 0.1);
-        }
-        .timeline-item.past .event-marker {
-            opacity: 0.6;
-            box-shadow: none;
-            background-color: rgba(255, 0, 0, 0.4);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translate(-50%, -50%) scale(0.9);
-        }
-
-        .timeline-item.current .event-details {
-            border-color: var(--accent-red);
-            box-shadow: 0 0 20px var(--accent-red), 0 0 30px rgba(255, 0, 0, 0.7);
-            transform: scale(1.02);
-        }
-        .timeline-item.current .event-marker {
-            background-color: var(--accent-red);
-            border-color: var(--accent-white);
-            box-shadow: 0 0 0 10px var(--primary-bg), 0 0 25px rgba(255, 0, 0, 1);
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-
-        /* Hover effects for timeline events */
-        .timeline-item:not(.current):hover .event-details {
-            transform: translateY(-5px);
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
-        }
-        .timeline-item:not(.current):hover .event-marker {
-            transform: translate(-50%, -50%) scale(1.05);
-            box-shadow: 0 0 0 10px var(--primary-bg), 0 0 20px rgba(255, 0, 0, 0.8);
+        /* Remove event-marker from timeline-item, as it's now a single moving element */
+        .timeline-item .event-marker {
+            display: none;
         }
 
 
@@ -614,6 +644,8 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
             padding-top: 20px;
+            justify-content: center;
+            justify-items: center;
         }
 
         .expert-card {
@@ -729,6 +761,8 @@
             gap: 30px;
             padding-top: 20px;
             margin-bottom: 50px;
+            justify-content: center;
+            justify-items: center;
         }
 
         .team-member {
@@ -894,10 +928,10 @@
                 justify-content: space-between;
             }
 
-            .header-left {
+            .header-left-group {
                 flex-grow: 1;
                 justify-content: space-between;
-                width: 100%; /* Take full width on mobile */
+                width: 100%;
                 margin-bottom: 10px;
             }
 
@@ -921,7 +955,7 @@
             }
 
             .header-btn {
-                order: 2; /* Move button to a predictable spot */
+                order: 2;
             }
             
             .hamburger {
@@ -943,8 +977,17 @@
                 padding: 0 10px;
             }
 
-            .vertical-timeline-container::after {
+            .timeline-line-background {
                 left: 30px;
+            }
+
+            #timeline-dots-container {
+                left: 30px;
+            }
+
+            .timeline-dot {
+                left: 30px;
+                transform: translateX(-50%);
             }
 
             .timeline-item {
@@ -960,7 +1003,7 @@
                 width: calc(100% - 60px);
             }
 
-            .event-marker {
+            .pacman-marker {
                 left: 30px;
                 transform: translate(-50%, -50%);
             }
@@ -1026,10 +1069,17 @@
             .timeline .subheading {
                 font-size: 1.1rem;
             }
-            .event-marker {
+            .pacman-marker {
                 width: 50px;
                 height: 50px;
                 font-size: 1.5rem;
+            }
+            .pacman-marker::before {
+                border-top: 25px solid var(--accent-red);
+                border-right: 25px solid transparent;
+                border-bottom: 25px solid var(--accent-red);
+                border-left: 25px solid var(--accent-red);
+                clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
             }
             .event-details .event-title {
                 font-size: 1.2rem;
@@ -1076,57 +1126,33 @@
             .timeline-item:nth-child(even) .event-details {
                 width: calc(100% - 70px);
             }
-            .event-marker {
+            .pacman-marker {
                 width: 45px;
                 height: 45px;
                 font-size: 1.3rem;
                 left: 25px;
             }
-            .vertical-timeline-container::after {
+            .pacman-marker::before {
+                border-top: 22.5px solid var(--accent-red);
+                border-right: 22.5px solid transparent;
+                border-bottom: 22.5px solid var(--accent-red);
+                border-left: 22.5px solid var(--accent-red);
+                clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+            }
+            .timeline-line-background {
+                left: 25px;
+            }
+            #timeline-dots-container {
                 left: 25px;
             }
             .nav-menu a {
-            white-space: nowrap; /* Prevents line break */
-            }
-            .event-marker.pacman {
-                background: transparent;
-                border: none;
-                box-shadow: none;
-                width: 40px;
-                height: 40px;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                z-index: 3;
+            white-space: nowrap;
             }
 
-            .event-marker.pacman::before {
-                content: "";
-                width: 0;
-                height: 0;
-                border-top: 20px solid yellow;
-                border-right: 20px solid transparent;
-                border-bottom: 20px solid yellow;
-                border-left: 20px solid yellow;
-                border-radius: 50%;
-                position: absolute;
-                top: 0;
-                left: 0;
-                animation: chomp 0.4s infinite alternate;
+            /* About section specific adjustments for mobile */
+            .about-background {
+                background-size: contain; /* Change to contain for mobile */
             }
-
-            @keyframes chomp {
-                0% {
-                    clip-path: polygon(0% 0%, 100% 20%, 100% 80%, 0% 100%);
-                }
-                100% {
-                    clip-path: polygon(0% 20%, 100% 50%, 0% 80%);
-                }
-            }
-            
-
-
         }
     </style>
 </head>
@@ -1163,6 +1189,8 @@
     </section>
 
     <section id="about" class="about">
+        <div id="about-background" class="about-background"></div>
+        <div class="about-background-overlay"></div>
         <div class="container">
             <h2 data-aos="fade-down">About QTUXATHON 3.0</h2>
             <div class="about-content">
@@ -1206,14 +1234,16 @@
             <h2 data-aos="fade-down">Event Timeline</h2>
             <p class="subheading" data-aos="fade-up" data-aos-delay="100">Here's what your journey will look like.</p>
             <div class="vertical-timeline-container">
-                <div class="timeline-line"></div>
+                <div class="timeline-line-background"></div>
+                <div id="timeline-dots-container"></div>
+                <div id="pacman-scroller" class="pacman-marker"></div>
+
                 <div class="timeline-item" data-aos="fade-right" data-aos-delay="100" data-event-start="2025-08-07" data-event-end="2025-08-07">
                     <div class="event-details">
                         <div class="event-date">Aug 7, 2025</div>
                         <h4 class="event-title">Registration Open</h4>
                         <p class="event-description">Register for one of the biggest in-person hackathons in the world.</p>
                     </div>
-                    <div class="event-marker"><i class="fas fa-file-alt"></i></div>
                 </div>
                 <div class="timeline-item" data-aos="fade-left" data-aos-delay="200" data-event-start="2025-08-07" data-event-end="2025-08-14">
                     <div class="event-details">
@@ -1221,7 +1251,6 @@
                         <h4 class="event-title">Form a Team</h4>
                         <p class="event-description">Find collaborators who match your ambition and complement your skills. For a team of 2-5 members.</p>
                     </div>
-                    <div class="event-marker"><i class="fas fa-users"></i></div>
                 </div>
                 <div class="timeline-item" data-aos="fade-right" data-aos-delay="300" data-event-start="2025-08-10" data-event-end="2025-08-10">
                     <div class="event-details">
@@ -1229,7 +1258,6 @@
                         <h4 class="event-title">Round 1 Begins (Online Round)</h4>
                         <p class="event-description">Kickstart your preparation with our expert-led workshops on key technologies.</p>
                     </div>
-                    <div class="event-marker"><i class="fas fa-chalkboard-teacher"></i></div>
                 </div>
                 <div class="timeline-item" data-aos="fade-left" data-aos-delay="400" data-event-start="2025-08-14" data-event-end="2025-08-14">
                     <div class="event-details">
@@ -1237,7 +1265,6 @@
                         <h4 class="event-title">Idea Submission Deadline</h4>
                         <p class="event-description">Submit your innovative ideas and get a chance to be shortlisted for the main event.</p>
                     </div>
-                    <div class="event-marker"><i class="fas fa-lightbulb"></i></div>
                 </div>
                 <div class="timeline-item" data-aos="fade-right" data-aos-delay="500" data-event-start="2025-08-18" data-event-end="2025-08-18">
                     <div class="event-details">
@@ -1245,7 +1272,6 @@
                         <h4 class="event-title">Shortlist Announcement</h4>
                         <p class="event-description">We will announce the shortlisted teams for the in-person hackathon.</p>
                     </div>
-                    <div class="event-marker"><i class="fas fa-bullhorn"></i></div>
                 </div>
                 <div class="timeline-item" data-aos="fade-left" data-aos-delay="600" data-event-start="2025-09-03" data-event-end="2025-09-04">
                     <div class="event-details">
@@ -1253,15 +1279,13 @@
                         <h4 class="event-title">Hack Day</h4>
                         <p class="event-description">The moment you've all been waiting for. Let the 36-hour coding marathon begin!</p>
                     </div>
-                    <div class="event-marker"><i class="fas fa-code"></i></div>
                 </div>
-                 <div class="timeline-item" data-aos="fade-right" data-aos-delay="700" data-event-start="2025-09-04" data-event-end="2025-09-04">
+                   <div class="timeline-item" data-aos="fade-right" data-aos-delay="700" data-event-start="2025-09-04" data-event-end="2025-09-04">
                     <div class="event-details">
                         <div class="event-date">Sep 4, 2025</div>
                         <h4 class="event-title">Winners Announced</h4>
                         <p class="event-description">Celebrate your achievements as we announce the winners and distribute prizes.</p>
                     </div>
-                    <div class="event-marker"><i class="fas fa-trophy"></i></div>
                 </div>
             </div>
         </div>
@@ -1733,6 +1757,9 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Global variable to store last scroll position for direction detection
+        let lastScrollY = 0;
+
         // Initialize AOS
         document.addEventListener('DOMContentLoaded', () => {
             AOS.init({
@@ -1746,6 +1773,15 @@
 
             // Call the function to update timeline status on load
             updateTimelineStatus();
+            // Generate dots after the DOM is fully loaded and rendered,
+            // to ensure accurate height calculations.
+            setTimeout(() => {
+                generateTimelineDots();
+                updatePacmanPosition(); // Set initial Pac-Man position and dot states
+            }, 100); // Small delay to ensure layout is stable
+
+            // Start the About section background slideshow
+            startAboutBackgroundSlideshow();
         });
 
         // Smooth Scroll for Navbar Links
@@ -1775,17 +1811,40 @@
         // Hamburger Menu Toggle for Mobile
         const hamburger = document.querySelector('.hamburger');
         const navMenu = document.querySelector('.nav-menu');
-        const headerBtn = document.querySelector('.header-btn');
+        const headerBtn = document.querySelector('.header-left-group .header-btn');
 
         hamburger.addEventListener('click', () => {
             navMenu.classList.toggle('active');
             hamburger.classList.toggle('active');
-            if (navMenu.classList.contains('active')) {
-                headerBtn.style.display = 'block';
-            } else {
-                headerBtn.style.display = 'none';
+            if (headerBtn) {
+                if (navMenu.classList.contains('active')) {
+                    headerBtn.style.display = 'block';
+                } else {
+                    if (window.innerWidth <= 992) {
+                        headerBtn.style.display = 'none';
+                    }
+                }
             }
         });
+
+        // Adjust header button visibility on resize for mobile menu
+        window.addEventListener('resize', () => {
+            if (headerBtn) {
+                if (window.innerWidth > 992) {
+                    headerBtn.style.display = 'block';
+                    navMenu.classList.remove('active');
+                    hamburger.classList.remove('active');
+                } else {
+                    if (!navMenu.classList.contains('active')) {
+                        headerBtn.style.display = 'none';
+                    }
+                }
+            }
+            // Regenerate dots on resize to ensure correct positioning
+            generateTimelineDots();
+            updatePacmanPosition();
+        });
+
 
         // FAQ Accordion Toggle
         const accordionHeaders = document.querySelectorAll('.accordion-header');
@@ -1802,25 +1861,27 @@
                         const otherHeader = item.querySelector('.accordion-header');
                         const otherIcon = otherHeader.querySelector('i');
 
-                        otherContent.style.maxHeight = null;
-                        otherContent.style.paddingBottom = '0';
-                        otherHeader.classList.remove('active');
-                        otherIcon.classList.remove('fa-chevron-up');
-                        otherIcon.classList.add('fa-chevron-down');
+                        if (otherContent) otherContent.style.maxHeight = null;
+                        if (otherContent) otherContent.style.paddingBottom = '0';
+                        if (otherHeader) otherHeader.classList.remove('active');
+                        if (otherIcon) otherIcon.classList.remove('fa-chevron-up');
+                        if (otherIcon) otherIcon.classList.add('fa-chevron-down');
                     }
                 });
 
                 header.classList.toggle('active');
-                if (accordionContent.style.maxHeight) {
-                    accordionContent.style.maxHeight = null;
-                    accordionContent.style.paddingBottom = '0';
-                    icon.classList.remove('fa-chevron-up');
-                    icon.classList.add('fa-chevron-down');
-                } else {
-                    accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
-                    accordionContent.style.paddingBottom = '20px';
-                    icon.classList.remove('fa-chevron-down');
-                    icon.classList.add('fa-chevron-up');
+                if (accordionContent) {
+                    if (accordionContent.style.maxHeight) {
+                        accordionContent.style.maxHeight = null;
+                        accordionContent.style.paddingBottom = '0';
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    } else {
+                        accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+                        accordionContent.style.paddingBottom = '20px';
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    }
                 }
             });
         });
@@ -1917,6 +1978,137 @@
             requestAnimationFrame(animateParticles);
         }
 
+        // Function to generate timeline dots (both main and small pellets)
+        function generateTimelineDots() {
+            const dotsContainer = document.getElementById('timeline-dots-container');
+            const timelineContainer = document.querySelector('.vertical-timeline-container');
+            const timelineItems = document.querySelectorAll('.timeline-item');
+
+            if (!dotsContainer || !timelineContainer || timelineItems.length === 0) return;
+
+            dotsContainer.innerHTML = ''; // Clear existing dots
+
+            const containerRect = timelineContainer.getBoundingClientRect();
+            const containerTopRelativeToViewport = containerRect.top + window.pageYOffset;
+
+            const mainDotPositions = []; // Store top positions of main dots
+
+            // 1. Create main dots at each timeline event's vertical center
+            timelineItems.forEach((item, index) => {
+                const itemRect = item.getBoundingClientRect();
+                const itemCenterY = (itemRect.top + window.pageYOffset + (itemRect.height / 2)) - containerTopRelativeToViewport;
+                
+                const mainDot = document.createElement('div');
+                mainDot.classList.add('timeline-dot', 'main-dot');
+                mainDot.style.top = `${itemCenterY}px`;
+                mainDot.dataset.isMainDot = 'true';
+                mainDot.dataset.index = index; // Assign an index for easier tracking
+                dotsContainer.appendChild(mainDot);
+                mainDotPositions.push(itemCenterY);
+            });
+
+            // Sort main dot positions to ensure correct segment calculation
+            mainDotPositions.sort((a, b) => a - b);
+
+            const dotSize = 10;
+            const pelletSpacing = 15; // Spacing for small pellets
+
+            // 2. Fill gaps with small pellet dots
+            let currentY = 0;
+            if (mainDotPositions.length > 0) {
+                // Add pellets from the top of the container to the first main dot
+                for (let y = 0; y < mainDotPositions[0] - (dotSize / 2); y += pelletSpacing) {
+                    const pellet = document.createElement('div');
+                    pellet.classList.add('timeline-dot');
+                    pellet.style.top = `${y}px`;
+                    dotsContainer.appendChild(pellet);
+                }
+                currentY = mainDotPositions[0] + (dotSize / 2);
+            }
+
+            for (let i = 0; i < mainDotPositions.length; i++) {
+                const startY = mainDotPositions[i] + (dotSize / 2);
+                const endY = (i + 1 < mainDotPositions.length) ? mainDotPositions[i + 1] - (dotSize / 2) : containerRect.height;
+
+                for (let y = Math.ceil(startY / pelletSpacing) * pelletSpacing; y < endY; y += pelletSpacing) {
+                    const pellet = document.createElement('div');
+                    pellet.classList.add('timeline-dot');
+                    pellet.style.top = `${y}px`;
+                    dotsContainer.appendChild(pellet);
+                }
+            }
+        }
+
+        // Function to update Pac-Man's position and dot states based on scroll
+        function updatePacmanPosition() {
+            const timelineSection = document.getElementById('timeline');
+            const pacmanScroller = document.getElementById('pacman-scroller');
+            const allDots = document.querySelectorAll('.timeline-dot');
+
+            if (!timelineSection || !pacmanScroller || allDots.length === 0) return;
+
+            const sectionRect = timelineSection.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+
+            const scrollY = window.pageYOffset;
+            const sectionTop = sectionRect.top + scrollY;
+            const sectionHeight = timelineSection.offsetHeight;
+
+            let progress = 0;
+            const scrollMidpoint = scrollY + (viewportHeight / 2);
+            const timelineRelativeScroll = scrollMidpoint - sectionTop;
+            progress = timelineRelativeScroll / sectionHeight;
+            
+            progress = Math.max(0, Math.min(1, progress));
+
+            const timelineContainer = document.querySelector('.vertical-timeline-container');
+            if (timelineContainer) {
+                const containerHeight = timelineContainer.offsetHeight;
+                const pacmanHeight = pacmanScroller.offsetHeight;
+                const pacmanTop = progress * (containerHeight - pacmanHeight);
+                pacmanScroller.style.top = `${pacmanTop}px`;
+
+                const scrollDirection = scrollY > lastScrollY ? 'down' : 'up';
+                lastScrollY = scrollY;
+
+                const pacmanRect = pacmanScroller.getBoundingClientRect();
+                const pacmanCenterY = pacmanRect.top + (pacmanRect.height / 2);
+                const eatingZone = 20;
+
+                allDots.forEach(dot => {
+                    const dotRect = dot.getBoundingClientRect();
+                    const dotCenterY = dotRect.top + (dotRect.height / 2);
+
+                    if (dot.classList.contains('main-dot')) {
+                        if (scrollDirection === 'down') {
+                            if (pacmanCenterY > dotCenterY) {
+                                dot.classList.add('passed');
+                            }
+                        } else {
+                            if (pacmanCenterY < dotCenterY) {
+                                dot.classList.remove('passed');
+                            }
+                        }
+                    } else {
+                        if (scrollDirection === 'down') {
+                            if (pacmanCenterY > dotCenterY - eatingZone && pacmanCenterY < dotCenterY + eatingZone) {
+                                dot.classList.add('eaten');
+                            } else if (pacmanCenterY > dotCenterY + eatingZone) {
+                                dot.classList.add('eaten');
+                            }
+                        } else {
+                            if (pacmanCenterY < dotCenterY + eatingZone && pacmanCenterY > dotCenterY - eatingZone) {
+                                dot.classList.remove('eaten');
+                            } else if (pacmanCenterY < dotCenterY - eatingZone) {
+                                dot.classList.remove('eaten');
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Function to update timeline item classes (past, current, upcoming)
         function updateTimelineStatus() {
             const today = new Date();
             today.setHours(0, 0, 0, 0);
@@ -1947,6 +2139,46 @@
             });
         }
 
+        // About Section Background Slideshow
+        const aboutBackgroundImages = [
+            '2.00.png',
+            "2.01.png",
+            '2.04.png',
+            '2.05.png',
+            '2.07.jpeg',
+            '2.08.png',
+            '2.09.png',
+            '2.10.png', 
+            '2.11.png',
+            '2.12.png' ,
+            '2.14.jpeg' // User provided image
+        ];
+        let currentAboutImageIndex = 0;
+
+        function changeAboutBackground() {
+            const aboutBackground = document.getElementById('about-background');
+            if (aboutBackground) {
+                aboutBackground.style.backgroundImage = `url('${aboutBackgroundImages[currentAboutImageIndex]}')`;
+                currentAboutImageIndex = (currentAboutImageIndex + 1) % aboutBackgroundImages.length;
+            }
+        }
+
+        function startAboutBackgroundSlideshow() {
+            changeAboutBackground(); // Set initial background
+            setInterval(changeAboutBackground, 5000); // Change every 5 seconds
+        }
+
+        // Attach scroll event listener for Pac-Man position and timeline status
+        window.addEventListener('scroll', () => {
+            updatePacmanPosition();
+            updateTimelineStatus();
+        });
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            generateTimelineDots();
+            updatePacmanPosition();
+        });
+        
         window.onload = function() {
             initParticles();
             animateParticles();
