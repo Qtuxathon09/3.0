@@ -10,6 +10,94 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Global Styles */
+        :root {
+            --primary-bg: #000000;
+            --secondary-bg: #1a1a1a;
+            --accent-red: #ff0000;
+            --accent-white: #ffffff;
+            --text-light: #f0f0f0;
+            --text-dark: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 100px;
+        }
+
+        /* Preloader Styles */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .preloader-content {
+            text-align: center;
+            animation: zoomIn 1.5s forwards ease-out;
+            opacity: 0;
+            transform: scale(1.2);
+        }
+        
+        .preloader-content h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5rem;
+            color: var(--accent-red);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+        }
+
+        .preloader-content h1 span {
+            color: var(--accent-white);
+        }
+
+        .preloader-content p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(1.2);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Body animation when preloader is gone */
+        body.visible {
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Main website styles (unchanged from your original code) */
         .header-content-wrapper {
             display: flex;
             align-items: center;
@@ -36,40 +124,6 @@
             gap: 25px;
             margin: 0;
             padding: 0;
-        }
-
-        :root {
-            --primary-bg: #000000;
-            --secondary-bg: #1a1a1a;
-            --accent-red: #ff0000;
-            --accent-white: #ffffff;
-            --text-light: #f0f0f0;
-            --text-dark: #333333;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--primary-bg);
-            color: var(--text-light);
-            line-height: 1.6;
-            overflow-x: hidden;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            padding-top: 100px;
-        }
-
-        body.loaded {
-            opacity: 1;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -778,7 +832,7 @@
             color: var(--accent-red);
             transform: scale(1.1);
         }
-
+        
         /* Team Section */
         .team {
             background-color: var(--secondary-bg);
@@ -1272,29 +1326,19 @@
                 border-left: 25px solid var(--accent-red);
                 clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
             }
-            .event-details .event-title {
-                font-size: 1.2rem;
+            .timeline-line-background {
+                left: 30px;
             }
-            .event-details .event-description {
-                font-size: 0.9rem;
+            #timeline-dots-container {
+                left: 30px;
             }
-
-            /* Problem statements responsive adjustments */
-            .problem-filter-bar {
-                flex-direction: column; /* Stack inputs vertically */
-                align-items: stretch; /* Stretch inputs to full width */
+            .nav-menu a {
+            white-space: nowrap;
             }
 
-            /* Removed .problem-filter-bar .search-input, .problem-filter-bar .filter-select styles */
-
-            .domain-categories {
-                flex-direction: column; /* Stack domain cards vertically */
-                align-items: stretch;
-            }
-
-            .domain-card {
-                max-width: unset; /* Remove max-width */
-                width: 100%; /* Take full width */
+            /* About section specific adjustments for mobile */
+            .about-background {
+                background-size: contain; /* Change to contain for mobile */
             }
         }
 
@@ -1366,6 +1410,14 @@
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <h1>QTUXATHON <span>3.0</span></h1>
+            <p>Break The Limits</p>
+        </div>
+    </div>
+
     <header class="header">
         <div class="header-content-wrapper">
             <div class="header-left-group">
@@ -1743,14 +1795,6 @@
                         <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
-                <div class="expert-card" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="https://placehold.co/120x120/ff0000/ffffff?text=E2" alt="Expert Photo 2" class="expert-photo">
-                    <h3 class="expert-name">Coming Soon</h3>
-                    <p class="expert-title">Asst. Professor - Dept. of Cybersecurity </p>
-                    <div class="expert-social">
-                        <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -1791,7 +1835,7 @@
                         </div>
                     </div>
 
-                                        <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
                         <div class="member-photo-wrapper">
                             <img src="Shivani.jpeg" alt="Lead Organizer 4" class="member-photo">
                         </div>
@@ -1823,7 +1867,7 @@
                             <img src="gokul.jpg" alt="Lead Organizer 5" class="member-photo">
                         </div>
                         <div class="member-info">
-                            <h3 class="member-name">‎ ‎ ‎ ‎   Gokul D ‎ ‎ ‎  ‎</h3>
+                            <h3 class="member-name">‎ ‎ ‎ ‎  Gokul D ‎ ‎ ‎  ‎</h3>
                             <p class="member-role">Co-Organizer <br>Logistics Lead</p>
                             <div class="member-social">
                                 <a href="https://www.linkedin.com/in/goocoolofficial/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
@@ -1840,7 +1884,7 @@
                 <div class="team-grid">
                     <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
                         <div class="member-photo-wrapper">
-                            <img src="https://placehold.co/300x300/ff0000/ffffff?text=T29" alt="D&C Member 1" class="member-photo">
+                            <img src="Suriya.JPG" alt="D&C Member 1" class="member-photo">
                         </div>
                         <div class="member-info">
                             <h3 class="member-name">‎ ‎ ‎ Suriya ‎ ‎ ‎ ‎ ‎ P ‎ ‎ </h3>
@@ -1852,7 +1896,7 @@
                     </div>
                     <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
                         <div class="member-photo-wrapper">
-                            <img src="https://placehold.co/300x300/ff0000/ffffff?text=T30" alt="D&C Member 2" class="member-photo">
+                            <img src="bose.jpg" alt="D&C Member 2" class="member-photo">
                         </div>
                         <div class="member-info">
                             <h3 class="member-name">Vikram Bose MSU ‎ ‎ </h3>
@@ -1864,7 +1908,7 @@
                     </div>
                     <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
                         <div class="member-photo-wrapper">
-                            <img src="https://placehold.co/300x300/ff0000/ffffff?text=T30" alt="D&C Member 2" class="member-photo">
+                            <img src="Varsha.JPG" alt="D&C Member 2" class="member-photo">
                         </div>
                         <div class="member-info">
                             <h3 class="member-name">‎ ‎ ‎ Varsha ‎ ‎ ‎ ‎ P ‎ ‎ </h3>
@@ -1876,7 +1920,7 @@
                     </div>
                     <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
                         <div class="member-photo-wrapper">
-                            <img src="https://placehold.co/300x300/ff0000/ffffff?text=T30" alt="D&C Member 2" class="member-photo">
+                            <img src="chand.png" alt="D&C Member 2" class="member-photo">
                         </div>
                         <div class="member-info">
                             <h3 class="member-name">Chandreish S </h3>
@@ -1888,7 +1932,7 @@
                     </div>
                     <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
                         <div class="member-photo-wrapper">
-                            <img src="https://placehold.co/300x300/ff0000/ffffff?text=T30" alt="D&C Member 2" class="member-photo">
+                            <img src="dharshan.png" alt="D&C Member 2" class="member-photo">
                         </div>
                         <div class="member-info">
                             <h3 class="member-name">Dharshan SP</h3>
@@ -1926,16 +1970,28 @@
         let lastScrollY = 0;
         let activeCategory = null; // Track the currently active category
 
-        // Initialize AOS
         document.addEventListener('DOMContentLoaded', () => {
+            // Preloader logic
+            const preloader = document.getElementById('preloader');
+            const body = document.body;
+
+            // Wait a moment for the initial render, then start the preloader fade out
+            setTimeout(() => {
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                        body.style.overflow = 'visible'; // Allow scrolling after preloader is gone
+                    }, 500); // Wait for the fade-out transition to complete
+                }
+            }, 2000); // You can adjust the preloader display duration here
+
+            // Initialize AOS once the content is loaded
             AOS.init({
                 duration: 1000,
                 once: true,
                 mirror: false,
             });
-
-            // Site load-in animation
-            document.body.classList.add('loaded');
 
             // Call the function to update timeline status on load
             updateTimelineStatus();
@@ -2321,9 +2377,9 @@
             '2.07.jpeg',
             '2.08.png',
             '2.09.png',
-            '2.10.png', 
+            '2.10.png',
             '2.11.png',
-            '2.12.png' ,
+            '2.12.png',
             '2.14.jpeg' // User provided image
         ];
         let currentAboutImageIndex = 0;
@@ -2353,7 +2409,7 @@
 
                 if (currentlySelectedDomain === clickedCategory) {
                     // If the same card is clicked again, deselect it
-                    card.classList.remove('active');
+                    domainCards.forEach(dc => dc.classList.remove('active'));
                     currentlySelectedDomain = null;
                     
                     // Hide all problem statements
