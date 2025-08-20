@@ -400,7 +400,15 @@
             display: block;
             margin-top: 5px;
         }
-
+        
+        /* New styles for the button group in the hero section */
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
 
         /* About Section */
         .about {
@@ -1451,7 +1459,11 @@
                 <div><span id="minutes">00</span><span class="label">Minutes</span></div>
                 <div><span id="seconds">00</span><span class="label">Seconds</span></div>
             </div>
-            <a href="https://forms.gle/BEkznnvMVeGggqv8A" class="btn">Register Now</a>
+            <!-- Added a container for the buttons to manage spacing -->
+            <div class="hero-actions">
+                <a href="https://forms.gle/BEkznnvMVeGggqv8A" class="btn">Register Now</a>
+                <a href="https://drive.google.com/file/d/1G9vjH6BOsZo5U0EL6sDaoI8J1hL2vhlc/view?usp=sharing" class="btn" target="_blank">View Brochure</a>
+            </div>
         </div>
     </section>
 
@@ -1638,7 +1650,7 @@
         </div>
     </section>
 
-     <section id="timeline" class="timeline">
+      <section id="timeline" class="timeline">
         <div class="container">
             <h2 data-aos="fade-down">Event Timeline</h2>
             <p class="subheading" data-aos="fade-up" data-aos-delay="100">Here's what your journey will look like.</p>
@@ -1682,7 +1694,7 @@
                         <p class="event-description">We will announce the shortlisted teams for the in-person hackathon.</p>
                     </div>
                 </div>
-                                <div class="timeline-item" data-aos="fade-right" data-aos-delay="500" data-event-start="2025-08-18" data-event-end="2025-08-18">
+                    <div class="timeline-item" data-aos="fade-right" data-aos-delay="500" data-event-start="2025-08-18" data-event-end="2025-08-18">
                     <div class="event-details">
                         <div class="event-date">Sep 06 - Sep 09, 2025</div>
                         <h4 class="event-title">Round 2 Confirmation</h4>
@@ -1693,7 +1705,7 @@
                     <div class="event-details">
                         <div class="event-date">Sep 11-12, 2025</div>
                         <h4 class="event-title">Hack Day</h4>
-                        <p class="event-description">The moment you've all been waiting for. Let the 24-hour coding marathon begin!</p>
+                        <p class="event-description">The moment you've all been waiting for. Let the 36-hour coding marathon begin!</p>
                     </div>
                 </div>
                     <div class="timeline-item" data-aos="fade-right" data-aos-delay="700" data-event-start="2025-09-04" data-event-end="2025-09-04">
@@ -1889,7 +1901,7 @@
                             <img src="gokul.jpg" alt="Lead Organizer 5" class="member-photo">
                         </div>
                         <div class="member-info">
-                            <h3 class="member-name">‎ ‎ ‎ ‎  Gokul D ‎ ‎ ‎  ‎</h3>
+                            <h3 class="member-name">‎ ‎ ‎ ‎  Gokul D ‎ ‎ ‎  ‎</h3>
                             <p class="member-role">Co-Organizer <br>Logistics Lead</p>
                             <div class="member-social">
                                 <a href="https://www.linkedin.com/in/goocoolofficial/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
@@ -2511,7 +2523,3 @@
     </script>
 </body>
 </html>
-
-
-
-
