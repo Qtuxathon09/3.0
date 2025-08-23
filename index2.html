@@ -108,7 +108,6 @@
         .header-left-group {
             display: flex;
             align-items: center;
-            /* To make sure the logo text does not wrap */
             white-space: nowrap;
             gap: 20px;
         }
@@ -123,7 +122,6 @@
             list-style: none;
             display: flex;
             align-items: center;
-            /* Prevent wrapping on larger screens */
             flex-wrap: nowrap;
             gap: 25px;
             margin: 0;
@@ -212,16 +210,12 @@
             height: 60px;
             padding: 0 20px;
             box-sizing: border-box;
-
-            /* Liquid Glass Effect */
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-
-            /* Flexbox for a clean layout */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -232,7 +226,7 @@
         .header-left {
             display: flex;
             align-items: center;
-            gap: 20px; /* Space between logo and button */
+            gap: 20px;
         }
         
         .logo {
@@ -243,7 +237,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             transition: text-shadow 0.3s ease;
-            white-space: nowrap; /* Ensures the logo stays on one line */
+            white-space: nowrap;
         }
         
         .logo:hover {
@@ -265,7 +259,7 @@
             border-radius: 20px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            white-space: nowrap; /* Prevents text from wrapping on smaller screens */
+            white-space: nowrap;
         }
 
         .header-btn:hover {
@@ -284,7 +278,6 @@
 
         .nav-menu li {
             margin-left: 30px;
-            /* Ensure list items and their content do not wrap */
             white-space: nowrap;
         }
 
@@ -387,7 +380,7 @@
             gap: 15px;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            flex-wrap: wrap;
         }
 
         #countdown-timer div {
@@ -398,7 +391,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             padding: 10px 15px;
-            min-width: 90px; /* Ensure minimum width for each segment */
+            min-width: 90px;
         }
 
         #countdown-timer .label {
@@ -420,39 +413,37 @@
 
         /* About Section */
         .about {
-            position: relative; /* Needed for absolute positioning of background and overlay */
-            background-color: var(--secondary-bg); /* Fallback */
+            position: relative;
+            background-color: var(--secondary-bg);
             text-align: center;
-            overflow: hidden; /* Ensures images don't spill outside */
+            overflow: hidden;
         }
-
-   
+        
         .about-background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* ... other background styles ... */
-            background-size: cover; /* This is the key change */
-            background-position: center; 
-            z-index: 0; /* Positions it behind the content */
-            background-repeat: no-repeat;
+            background-size: cover; /* Default to cover for larger screens */
+            background-position: center;
+            background-repeat: no-repeat; /* Ensure no repeat */
+            transition: background-image 1s ease-in-out; /* Smooth transition for image change */
+            z-index: 0; /* Behind content */
         }
-            
-
+        
         .about-background-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Dark overlay for text readability */
-            z-index: 1; /* Between background and content */
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
         }
 
         .about .container {
-            position: relative; /* Ensure content is above the overlay */
+            position: relative;
             z-index: 2;
         }
 
@@ -460,7 +451,6 @@
             font-size: 2.8rem;
             color: var(--accent-red);
             margin-bottom: 40px;
-            /* Reverted glassy liquid class finish */
             background: none;
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
@@ -525,25 +515,25 @@
             background-color: var(--primary-bg);
             text-align: center;
             padding: 80px 0;
-            position: relative; /* Added to contain the pseudo-element */
-            overflow: hidden; /* To clip the animated background */
+            position: relative;
+            overflow: hidden;
         }
         
         /* Animated background for the timeline section */
         .timeline::before {
             content: '';
             position: absolute;
-            top: -200%; /* Start off-screen */
+            top: -200%;
             left: 0;
             width: 100%;
-            height: 300%; /* Large height to allow for vertical movement */
-            background: 
+            height: 300%;
+            background:
                 /* Subtle grid lines */
                 repeating-linear-gradient(to right, rgba(255, 0, 0, 0.05), rgba(255, 0, 0, 0.05) 1px, transparent 1px, transparent 20px),
                 repeating-linear-gradient(to bottom, rgba(255, 0, 0, 0.05), rgba(255, 0, 0, 0.05) 1px, transparent 1px, transparent 20px);
             background-size: 20px 20px;
             animation: moveGrid 30s linear infinite;
-            z-index: 0; /* Position behind content */
+            z-index: 0;
             opacity: 0.5;
         }
 
@@ -558,7 +548,7 @@
         
         .timeline h2, .timeline .subheading, .vertical-timeline-container {
             position: relative;
-            z-index: 1; /* Ensure content is above the animated background */
+            z-index: 1;
         }
 
         .timeline h2 {
@@ -840,7 +830,6 @@
             transform: scale(1.05);
         }
 
-        /* Removed scroller animation for static sponsor list */
         .scroller {
             display: flex;
             width: auto;
@@ -852,8 +841,6 @@
         }
 
         /* Team Section Redesign */
-         
-        /* Team Section */
         .team {
             background-color: var(--secondary-bg);
             text-align: center;
@@ -888,16 +875,16 @@
         .team-member {
             background-color: var(--primary-bg);
             border-radius: 10px;
-            padding: 0; /* Removed padding from here */
+            padding: 0;
             text-align: center;
             border: 1px solid rgba(255, 0, 0, 0.2);
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
-            display: flex; /* Use flexbox for internal layout */
-            flex-direction: column; /* Stack image and text vertically */
-            align-items: center; /* Center items horizontally */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .team-member::before {
@@ -925,21 +912,21 @@
         }
 
         .member-photo {
-            width: 100%; /* Make image take full width of its container */
-            height: auto; /* Maintain aspect ratio */
-            border-radius: 10px 10px 0 0; /* Rounded top corners, sharp bottom */
+            width: 100%;
+            height: auto;
+            border-radius: 10px 10px 0 0;
             object-fit: cover;
-            margin: 0; /* Removed margin */
-            border: none; /* Removed border */
-            box-shadow: none; /* Removed box-shadow */
+            margin: 0;
+            border: none;
+            box-shadow: none;
             position: relative;
             z-index: 1;
-            display: block; /* Ensure it behaves like a block element */
+            display: block;
         }
 
         .member-photo-wrapper {
             width: 100%;
-            padding-top: 100%; /* Creates a square aspect ratio (1:1) */
+            padding-top: 100%;
             position: relative;
             overflow: hidden;
             border-radius: 10px 10px 0 0;
@@ -956,31 +943,31 @@
         }
 
         .member-info {
-            padding: 15px 20px 25px; /* Add padding to the text content */
+            padding: 15px 20px 25px;
             width: 100%;
             position: relative;
             z-index: 1;
-            background-color: var(--primary-bg); /* Ensure background for text */
-            border-radius: 0 0 10px 10px; /* Rounded bottom corners */
+            background-color: var(--primary-bg);
+            border-radius: 0 0 10px 10px;
         }
 
         .member-name {
-            font-size: 1.2rem; /* Adjusted font size */
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--accent-white);
             margin-bottom: 5px;
-            text-align: center; /* Centered text */
+            text-align: center;
         }
 
         .member-role {
-            font-size: 0.85rem; /* Adjusted font size */
+            font-size: 0.85rem;
             color: var(--text-light);
             margin-bottom: 15px;
-            text-align: center; /* Centered text */
+            text-align: center;
         }
 
         .member-social {
-            text-align: center; /* Centered social icons */
+            text-align: center;
         }
 
         .member-social a {
@@ -998,7 +985,6 @@
         }
 
 
-        /* Contact Us Section Styles */
         /* Contact Us Section Styles */
         .contact-us {
             background-color: var(--primary-bg);
@@ -1018,7 +1004,7 @@
             background: radial-gradient(circle, rgba(255, 0, 0, 0.15) 0%, transparent 50%);
             border-radius: 50%;
             animation: pulseGlow 5s infinite ease-in-out;
-            z-index: 0; /* Position behind content */
+            z-index: 0;
             transform: translate(-50%, -50%);
         }
 
@@ -1039,7 +1025,7 @@
 
         .contact-us h2, .contact-content {
             position: relative;
-            z-index: 1; /* Ensure content is above the animated background */
+            z-index: 1;
         }
 
         .contact-us h2 {
@@ -1056,15 +1042,14 @@
         }
 
         .contact-details {
-            /* Main changes start here */
             display: flex;
-            flex-direction: row; /* Arranges the contact items horizontally */
+            flex-direction: row;
             justify-content: center;
-            align-items: center; /* Aligns the items vertically in the middle */
-            flex-wrap: wrap; /* Allows the items to wrap to a new line on smaller screens */
+            align-items: center;
+            flex-wrap: wrap;
             gap: 50px;
-            max-width: 900px; /* Optional: Sets a max-width for better control on large screens */
-            margin: 0 auto; /* Centers the container */
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .contact-item {
@@ -1072,7 +1057,6 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            /* Optional: Sets a minimum width for consistent spacing */
             min-width: 200px;
         }
 
@@ -1093,10 +1077,10 @@
         }
 
         .contact-form-container {
-            display: none; /* Keep the form hidden */
+            display: none;
         }
-
-                /* Problem Statements Section */
+        
+        /* Problem Statements Section */
         .problem-statements {
             background-color: var(--primary-bg);
             text-align: center;
@@ -1126,8 +1110,6 @@
             margin-bottom: 40px;
             padding: 0 20px;
         }
-
-        /* Removed .problem-filter-bar .search-input, .problem-filter-bar .filter-select styles */
 
         .domain-categories {
             display: flex;
@@ -1210,9 +1192,8 @@
             background-color: var(--secondary-bg);
             border-radius: 8px;
             border: 1px solid rgba(255, 0, 0, 0.2);
-            display: none; /* Hidden by default, shown by JS */
+            display: none;
         }
-
         
         /* Back to Top Button */
         #back-to-top {
@@ -1316,6 +1297,111 @@
                 display: block;
             }
         }
+
+        /* --- Custom Mobile-First CSS Fixes --- */
+        @media (max-width: 768px) {
+            /* General padding adjustments for smaller screens */
+            section {
+                padding: 60px 20px;
+            }
+
+            /* --- HEADER & NAVIGATION FIXES --- */
+            .header {
+                width: 100%; /* Make header full width */
+                left: 0;
+                transform: none; /* Remove horizontal centering transform */
+                top: 0; /* Align to the very top */
+                border-radius: 0; /* Remove rounded corners for full-width look */
+                border-left: none;
+                border-right: none;
+                padding: 0 15px; /* Add padding to prevent content from touching edges */
+            }
+            
+            .logo {
+                font-size: 1.5rem; /* Shrink logo text */
+            }
+
+            /* --- HERO SECTION FIXES --- */
+            .hero h1 {
+                font-size: 2.2rem; /* Shrink main heading */
+            }
+
+            .hero p {
+                font-size: 1.1rem; /* Shrink subheading */
+            }
+
+            #countdown-timer {
+                font-size: 1.5rem; /* Shrink countdown numbers */
+                gap: 10px;
+            }
+
+            #countdown-timer div {
+                min-width: 65px; /* Adjust min width for small screens */
+                padding: 8px 10px;
+            }
+
+            .hero-actions {
+                flex-direction: column; /* Stack buttons vertically */
+                gap: 15px;
+            }
+
+            /* --- ABOUT SECTION FIXES --- */
+            .about-content {
+                flex-direction: column; /* Stack about text and highlights vertically */
+            }
+
+            .about-text, .about-highlights {
+                min-width: auto;
+                width: 100%;
+                padding-right: 0; /* Remove padding that would cause spacing issues */
+            }
+
+            /* --- TIMELINE FIXES --- */
+            /* Ensure timeline items stack correctly on mobile */
+            .timeline-item {
+                flex-direction: column !important; /* Force all items to stack vertically */
+                align-items: center;
+                margin-bottom: 30px;
+            }
+
+            .timeline-item:nth-child(odd) .event-details,
+            .timeline-item:nth-child(even) .event-details {
+                margin-left: 0;
+                margin-right: 0;
+                width: 100%;
+            }
+
+            .vertical-timeline-container {
+                padding: 0;
+            }
+            
+            .timeline-line-background, #timeline-dots-container, .pacman-marker {
+                display: none; /* Hide the Pac-Man animation for a cleaner mobile experience */
+            }
+
+            /* --- CONTACT US FIXES --- */
+            .contact-details {
+                flex-direction: column; /* Stack contact items vertically */
+                gap: 30px;
+            }
+            
+            .contact-item {
+                min-width: auto; /* Remove the minimum width constraint */
+                width: 100%;
+            }
+
+            /* --- PROBLEM STATEMENTS FIXES --- */
+            .domain-categories {
+                flex-direction: row; /* Keep as row but allow wrapping */
+                justify-content: center;
+            }
+
+            .domain-card {
+                min-width: unset; /* Allow cards to shrink */
+                flex: 1; /* Distribute space evenly */
+                max-width: 150px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1327,6 +1413,7 @@
         </div>
     </div>
 
+    <!-- Header -->
     <header class="header">
         <div class="header-content-wrapper">
             <div class="header-left-group">
@@ -1339,7 +1426,6 @@
                     <li><a href="#timeline">Timeline</a></li>
                     <li><a href="#sponsors">Sponsors</a></li>
                     <li><a href="#team">Team</a></li>
-                    <!-- <li><a href="#faq">FAQ</a></li> -->
                     <li><a href="#contact-us">Contact Us</a></li>
                 </ul>
             </nav>
@@ -1349,6 +1435,7 @@
         </div>
     </header>
 
+    <!-- Hero Section -->
     <section id="hero" class="hero">
         <canvas id="hero-particles" class="hero-canvas"></canvas>
         <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
@@ -1360,7 +1447,6 @@
                 <div><span id="minutes">00</span><span class="label">Minutes</span></div>
                 <div><span id="seconds">00</span><span class="label">Seconds</span></div>
             </div>
-            <!-- Added a container for the buttons to manage spacing -->
             <div class="hero-actions">
                 <a href="https://forms.gle/BEkznnvMVeGggqv8A" class="btn">Register Now</a>
                 <a href="https://drive.google.com/file/d/1G9vjH6BOsZo5U0EL6sDaoI8J1hL2vhlc/view?usp=sharing" class="btn" target="_blank">View Brochure</a>
@@ -1368,6 +1454,7 @@
         </div>
     </section>
 
+    <!-- About Section -->
     <section id="about" class="about">
         <div id="about-background" class="about-background"></div>
         <div class="about-background-overlay"></div>
@@ -1396,13 +1483,13 @@
         </div>
     </section>
 
+    <!-- Problem Statements Section -->
     <section id="problem-statements" class="problem-statements">
         <div class="container">
             <h2 data-aos="fade-down">Problem Statements</h2>
             <p class="subheading-guidance" data-aos="fade-up" data-aos-delay="100">Problem statements are for guidance, but you're free to choose your own if you have a better one. More problem statements upcoming Stay tuned..!</p>
 
             <div class="problem-filter-bar" data-aos="fade-up" data-aos-delay="200">
-                <!-- Removed search input and filter selects -->
             </div>
 
             <div class="domain-categories" data-aos="fade-up" data-aos-delay="300">
@@ -1539,76 +1626,6 @@
         </div>
     </section>
 
-    <!-- Timeline Section -->
-    <section id="timeline" class="timeline">
-        <div class="container">
-            <h2 data-aos="fade-down">Event Timeline</h2>
-            <p class="subheading" data-aos="fade-up" data-aos-delay="100">Here's what your journey will look like.</p>
-            <div class="vertical-timeline-container">
-                <div class="timeline-line-background"></div>
-                <div id="timeline-dots-container"></div>
-                <div id="pacman-scroller" class="pacman-marker"></div>
-
-                <div class="timeline-item" data-aos="fade-right" data-aos-delay="100" data-event-start="2025-08-07" data-event-end="2025-08-07">
-                    <div class="event-details">
-                        <div class="event-date">Aug 19, 2025</div>
-                        <h4 class="event-title">Registration Open</h4>
-                        <p class="event-description">Register for one of the biggest in-person hackathons in the world.</p>
-                    </div>
-                </div>
-                <div class="timeline-item" data-aos="fade-left" data-aos-delay="200" data-event-start="2025-08-07" data-event-end="2025-08-14">
-                    <div class="event-details">
-                        <div class="event-date">Aug 19 - Aug 21, 2025</div>
-                        <h4 class="event-title">Form a Team</h4>
-                        <p class="event-description">Find collaborators who match your ambition and complement your skills. For a team of 2-4 members.</p>
-                    </div>
-                </div>
-                <div class="timeline-item" data-aos="fade-right" data-aos-delay="300" data-event-start="2025-08-10" data-event-end="2025-08-10">
-                    <div class="event-details">
-                        <div class="event-date">Aug 21, 2025</div>
-                        <h4 class="event-title">Round 1 Begins (Online Round)</h4>
-                        <p class="event-description">Kickstart your preparation with our expert-led workshops on key technologies.</p>
-                    </div>
-                </div>
-                <div class="timeline-item" data-aos="fade-left" data-aos-delay="400" data-event-start="2025-08-14" data-event-end="2025-08-14">
-                    <div class="event-details">
-                        <div class="event-date">Aug 29, 2025 (Night)</div>
-                        <h4 class="event-title">Idea Submission Deadline</h4>
-                        <p class="event-description">Submit your innovative ideas and get a chance to be shortlisted for the main event.</p>
-                    </div>
-                </div>
-                <div class="timeline-item" data-aos="fade-right" data-aos-delay="500" data-event-start="2025-08-18" data-event-end="2025-08-18">
-                    <div class="event-details">
-                        <div class="event-date">Sep 02 - Sep 05, 2025</div>
-                        <h4 class="event-title">Shortlist Announcement</h4>
-                        <p class="event-description">We will announce the shortlisted teams for the in-person hackathon.</p>
-                    </div>
-                </div>
-                <div class="timeline-item" data-aos="fade-right" data-aos-delay="500" data-event-start="2025-08-18" data-event-end="2025-08-18">
-                    <div class="event-details">
-                        <div class="event-date">Sep 06 - Sep 09, 2025</div>
-                        <h4 class="event-title">Round 2 Confirmation</h4>
-                        <p class="event-description">Shortlisted teams should confirm their participation for Round 2 by Registering and paying the accommodation fee</p>
-                    </div>
-                </div>
-                <div class="timeline-item" data-aos="fade-left" data-aos-delay="600" data-event-start="2025-09-03" data-event-end="2025-09-04">
-                    <div class="event-details">
-                        <div class="event-date">Sep 11-12, 2025</div>
-                        <h4 class="event-title">Hack Day</h4>
-                        <p class="event-description">The moment you've all been waiting for. Let the 24-hour coding marathon begin!</p>
-                    </div>
-                </div>
-                <div class="timeline-item" data-aos="fade-right" data-aos-delay="700" data-event-start="2025-09-04" data-event-end="2025-09-04">
-                    <div class="event-details">
-                        <div class="event-date">Sep 12, 2025</div>
-                        <h4 class="event-title">Winners Announced</h4>
-                        <p class="event-description">Celebrate your achievements as we announce the winners and distribute prizes.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- NEW: Sponsors Section -->
     <section id="sponsors" class="sponsors">
         <div class="container">
@@ -1617,15 +1634,14 @@
                 <!-- Sponsor 3 -->
                 <div class="sponsor-card">
                     <a href="https://www.linkedin.com/company/wyntrix/posts/?feedView=all" target="_blank">
-                           <img src="Wyn.png" alt="Wyntrix Logo">
+                        <img src="Wyn.png" alt="Wyntrix Logo">
                     </a>
                 </div>
             </div>
         </div>
     </section>
-
     
-
+    <!-- Team Section -->
     <section id="team" class="team">
         <div class="container">
             <h2 data-aos="fade-down">Meet Our Core Team</h2>
@@ -1636,7 +1652,7 @@
                 <div class="team-grid">
                     <div class="team-member" data-aos="zoom-in" data-aos-delay="100">
                         <div class="member-photo-wrapper">
-                            <img src="Dayasir.jpeg" alt="Dayasagar G" class="member-photo">
+                            <img src="https://placehold.co/400x400/000000/ffffff?text=Dayasagar+G" alt="Dayasagar G" class="member-photo">
                         </div>
                         <div class="member-info">
                             <h3 class="member-name">Dayasagar G</h3>
@@ -1784,7 +1800,7 @@
         </div>
     </section>
 
-    <!-- NEW: Contact U`s Section -->
+    <!-- Contact Us Section -->
     <section id="contact-us" class="contact-us">
         <div class="container">
             <h2 data-aos="fade-down">Get In Touch</h2>
@@ -1806,47 +1822,27 @@
                         <p>1. Rohith Vijay R - +91 73583 20034</p>
                         <p>2. Cletus Albin M R - +91 98946 03671</p>
                         <p>3. Shivani M S - +91 63747 85113</p>
-                        
                         <p>4. Shanmitha S - +91 91764 03225</p>
                         <p>5. Gokul D - +91 93844 77075</p>
-                        
                     </div>
                 </div>
-                <!-- <div class="contact-form-container" data-aos="fade-left" data-aos-delay="400">
-                    <form action="#" class="contact-form">
-                        <h3>Send us a message</h3>
-                        <div class="form-group">
-                            <label for="name">Your Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Your Email</label>
-                            <input type="email" id="email" name="email" required> 
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Your Message</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn">Send Message</button>
-                    </form>
-                </div> -->
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2025 QTUXATHON 3.0. All rights reserved.</p>
             <p>Organized by – Dept. of CSE - Cybersecurity</p>
             <div class="social-links">
-                <!-- <a href="#" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a> -->
                 <a href="https://www.instagram.com/qtuxathon_3.o/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.linkedin.com/in/ieee-ssit-smc-188876322/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <!-- <a href="#" target="_blank" title="GitHub"><i class="fab fa-github"></i></a> -->
             </div>
         </div>
     </footer>
 
+    <!-- Back to Top Button -->
     <button id="back-to-top" title="Back to Top">
         <i class="fas fa-arrow-up"></i>
     </button>
@@ -1882,12 +1878,17 @@
 
             // Call the function to update timeline status on load
             updateTimelineStatus();
-            // Generate dots after the DOM is fully loaded and rendered,
-            // to ensure accurate height calculations.
-            setTimeout(() => {
-                generateTimelineDots();
-                updatePacmanPosition(); // Set initial Pac-Man position and dot states
-            }, 100); // Small delay to ensure layout is stable
+
+            // Check if we are on a large screen before generating dots
+            // to avoid rendering them on mobile where they are hidden.
+            if (window.innerWidth > 768) {
+                // Generate dots after the DOM is fully loaded and rendered,
+                // to ensure accurate height calculations.
+                setTimeout(() => {
+                    generateTimelineDots();
+                    updatePacmanPosition(); // Set initial Pac-Man position and dot states
+                }, 100);
+            }
 
             // Start the About section background slideshow
             startAboutBackgroundSlideshow();
@@ -1918,8 +1919,10 @@
                     });
 
                     const navMenu = document.querySelector('.nav-menu');
+                    const hamburger = document.querySelector('.hamburger');
                     if (navMenu.classList.contains('active')) {
                         navMenu.classList.remove('active');
+                        hamburger.classList.remove('active');
                     }
                 }
             });
@@ -1958,8 +1961,10 @@
                 }
             }
             // Regenerate dots on resize to ensure correct positioning
-            generateTimelineDots();
-            updatePacmanPosition();
+            if (window.innerWidth > 768) {
+                generateTimelineDots();
+                updatePacmanPosition();
+            }
         });
 
 
@@ -2111,7 +2116,7 @@
             const mainDotPositions = []; // Store top positions of main dots
 
             // 1. Create main dots at each timeline event's vertical center
-            timelineItems.forEach((item, index) => {
+            timelineItems.forEach((item) => {
                 const itemRect = item.getBoundingClientRect();
                 const itemCenterY = (itemRect.top + window.pageYOffset + (itemRect.height / 2)) - containerTopRelativeToViewport;
                 
@@ -2130,7 +2135,6 @@
             const pelletSpacing = 15; // Spacing for small pellets
 
             // 2. Fill gaps with small pellet dots
-            let currentY = 0;
             if (mainDotPositions.length > 0) {
                 // Add pellets from the top of the container to the first main dot
                 for (let y = 0; y < mainDotPositions[0] - (dotSize / 2); y += pelletSpacing) {
@@ -2139,7 +2143,6 @@
                     pellet.style.top = `${y}px`;
                     dotsContainer.appendChild(pellet);
                 }
-                currentY = mainDotPositions[0] + (dotSize / 2);
             }
 
             for (let i = 0; i < mainDotPositions.length; i++) {
@@ -2188,13 +2191,10 @@
                 lastScrollY = scrollY;
 
                 const pacmanRect = pacmanScroller.getBoundingClientRect();
-                const pacmanCenterY = pacmanRect.top + (pacmanRect.height / 2);
-                const eatingZone = 20;
-
+                
                 allDots.forEach(dot => {
                     const dotRect = dot.getBoundingClientRect();
-                    const dotCenterY = dotRect.top + (dotRect.height / 2);
-
+                    
                     if (dot.classList.contains('main-dot')) {
                         if (scrollY + (viewportHeight / 2) > dotRect.top + scrollY) {
                             dot.classList.add('passed');
@@ -2255,7 +2255,7 @@
             '2.10.png',
             '2.11.png',
             '2.12.png',
-            '2.14.jpeg' // User provided image
+            '2.14.jpeg'
         ];
         let currentAboutImageIndex = 0;
 
@@ -2272,42 +2272,35 @@
             setInterval(changeAboutBackground, 5000); // Change every 5 seconds
         }
 
-        // Problem Statements Filtering (New functionality)
+        // Problem Statements Filtering
         const domainCards = document.querySelectorAll('.domain-card');
         const problemAccordionItems = document.querySelectorAll('.problem-statements-list .accordion-item');
         const noDomainSelectedMessage = document.querySelector('.no-domain-selected-message');
-        let currentlySelectedDomain = null; // To track the currently selected domain
+        let currentlySelectedDomain = null;
 
         domainCards.forEach(card => {
             card.addEventListener('click', () => {
                 const clickedCategory = card.dataset.category;
 
                 if (currentlySelectedDomain === clickedCategory) {
-                    // If the same card is clicked again, deselect it
                     domainCards.forEach(dc => dc.classList.remove('active'));
                     currentlySelectedDomain = null;
                     
-                    // Hide all problem statements
                     problemAccordionItems.forEach(item => {
                         item.style.display = 'none';
                     });
-                    // Show the "Select a theme" message
                     if (noDomainSelectedMessage) {
                         noDomainSelectedMessage.style.display = 'block';
                     }
                 } else {
-                    // Deselect any previously active card
                     domainCards.forEach(dc => dc.classList.remove('active'));
-                    // Select the new card
                     card.classList.add('active');
                     currentlySelectedDomain = clickedCategory;
 
-                    // Hide the "Select a theme" message
                     if (noDomainSelectedMessage) {
                         noDomainSelectedMessage.style.display = 'none';
                     }
 
-                    // Show only the problem statements for the selected category
                     problemAccordionItems.forEach(item => {
                         const itemCategory = item.dataset.category;
                         if (itemCategory === clickedCategory) {
@@ -2321,12 +2314,18 @@
         });
 
         // Countdown Timer Logic
-        const countdownDate = new Date("Sep 11, 2025 09:00:00").getTime(); // Set your hackathon start date and time here
+        const countdownDate = new Date("Sep 11, 2025 09:00:00").getTime();
 
         function startCountdown() {
             const x = setInterval(function() {
                 const now = new Date().getTime();
                 const distance = countdownDate - now;
+
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("countdown-timer").innerHTML = "HACKATHON HAS STARTED!";
+                    return;
+                }
 
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -2338,22 +2337,25 @@
                 document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
                 document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
 
-                if (distance < 0) {
-                    clearInterval(x);
-                    document.getElementById("countdown-timer").innerHTML = "HACKATHON HAS STARTED!";
-                }
             }, 1000);
         }
 
         // Attach scroll event listener for Pac-Man position and timeline status
         window.addEventListener('scroll', () => {
-            updatePacmanPosition();
+            // Only run pacman animation on larger screens
+            if (window.innerWidth > 768) {
+                updatePacmanPosition();
+            }
             updateTimelineStatus();
         });
+
         window.addEventListener('resize', () => {
             resizeCanvas();
-            generateTimelineDots();
-            updatePacmanPosition();
+            // Only regenerate dots on larger screens
+            if (window.innerWidth > 768) {
+                generateTimelineDots();
+                updatePacmanPosition();
+            }
         });
         
         window.onload = function() {
