@@ -108,6 +108,8 @@
         .header-left-group {
             display: flex;
             align-items: center;
+            /* To make sure the logo text does not wrap */
+            white-space: nowrap;
             gap: 20px;
         }
 
@@ -121,6 +123,8 @@
             list-style: none;
             display: flex;
             align-items: center;
+            /* Prevent wrapping on larger screens */
+            flex-wrap: nowrap;
             gap: 25px;
             margin: 0;
             padding: 0;
@@ -203,8 +207,8 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90%;
-            max-width: 1200px;
+            width: 95%; /* Increased width for more space */
+            max-width: 1300px; /* Increased max-width */
             height: 60px;
             padding: 0 20px;
             box-sizing: border-box;
@@ -222,6 +226,7 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .header-left {
@@ -238,6 +243,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             transition: text-shadow 0.3s ease;
+            white-space: nowrap; /* Ensures the logo stays on one line */
         }
         
         .logo:hover {
@@ -278,6 +284,8 @@
 
         .nav-menu li {
             margin-left: 30px;
+            /* Ensure list items and their content do not wrap */
+            white-space: nowrap;
         }
 
         .nav-menu a {
@@ -418,18 +426,20 @@
             overflow: hidden; /* Ensures images don't spill outside */
         }
 
+   
         .about-background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-size: cover; /* Default to cover for larger screens */
-            background-position: center;
-            background-repeat: no-repeat; /* Ensure no repeat */
-            transition: background-image 1s ease-in-out; /* Smooth transition for image change */
-            z-index: 0; /* Behind content */
+            /* ... other background styles ... */
+            background-size: cover; /* This is the key change */
+            background-position: center; 
+            z-index: 0; /* Positions it behind the content */
+            background-repeat: no-repeat;
         }
+            
 
         .about-background-overlay {
             position: absolute;
@@ -515,6 +525,40 @@
             background-color: var(--primary-bg);
             text-align: center;
             padding: 80px 0;
+            position: relative; /* Added to contain the pseudo-element */
+            overflow: hidden; /* To clip the animated background */
+        }
+        
+        /* Animated background for the timeline section */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: -200%; /* Start off-screen */
+            left: 0;
+            width: 100%;
+            height: 300%; /* Large height to allow for vertical movement */
+            background: 
+                /* Subtle grid lines */
+                repeating-linear-gradient(to right, rgba(255, 0, 0, 0.05), rgba(255, 0, 0, 0.05) 1px, transparent 1px, transparent 20px),
+                repeating-linear-gradient(to bottom, rgba(255, 0, 0, 0.05), rgba(255, 0, 0, 0.05) 1px, transparent 1px, transparent 20px);
+            background-size: 20px 20px;
+            animation: moveGrid 30s linear infinite;
+            z-index: 0; /* Position behind content */
+            opacity: 0.5;
+        }
+
+        @keyframes moveGrid {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(20px);
+            }
+        }
+        
+        .timeline h2, .timeline .subheading, .vertical-timeline-container {
+            position: relative;
+            z-index: 1; /* Ensure content is above the animated background */
         }
 
         .timeline h2 {
@@ -585,7 +629,6 @@
         .timeline-dot.passed {
             background-color: var(--accent-red);
         }
-
 
         /* New styles for pacman-marker */
         .pacman-marker {
@@ -669,7 +712,6 @@
             display: none;
         }
 
-
         /* FAQ Section */
         .faq {
             background-color: var(--secondary-bg);
@@ -735,112 +777,82 @@
             padding-bottom: 20px;
         }
 
-        /* Experts & Judges Section */
-        .experts-judges {
-            background-color: var(--primary-bg);
+        /* Sponsors Section (UPDATED) */
+        .sponsors {
+            background-color: var(--secondary-bg);
             text-align: center;
+            overflow: hidden;
+            padding-top: 40px;
+            padding-bottom: 40px;
         }
 
-        .experts-judges h2 {
+        .sponsors h2 {
             font-size: 2.8rem;
             color: var(--accent-red);
             margin-bottom: 40px;
         }
 
-        .experts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            padding-top: 20px;
+        .sponsor-card-group {
+            display: flex;
             justify-content: center;
-            justify-items: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
         }
 
-        .expert-card {
-            background-color: var(--secondary-bg);
+        .sponsor-card {
+            background-color: var(--primary-bg);
             border-radius: 10px;
             padding: 25px;
+            margin: 0;
             text-align: center;
             border: 1px solid rgba(255, 0, 0, 0.2);
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            flex-shrink: 0;
+            width: 200px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .expert-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(255, 0, 0, 0.3) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            transform: scale(0);
-            z-index: 0;
+        .sponsor-card a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .expert-card:hover::before {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .expert-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 0 25px var(--accent-red), 0 0 40px rgba(255, 0, 0, 0.5);
-        }
-
-        .expert-photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 15px;
-            border: 3px solid var(--accent-red);
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        .sponsor-card img {
+            width: 80%;
+            max-width: 120px;
+            height: auto;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
             position: relative;
             z-index: 1;
         }
 
-        .expert-card:hover .expert-photo {
-            border-color: var(--accent-white);
-            box-shadow: 0 0 25px var(--accent-white), 0 0 40px rgba(255, 255, 255, 0.5);
+        .sponsor-card:hover img {
+            transform: scale(1.05);
         }
 
-        .expert-name {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--accent-white);
-            margin-bottom: 5px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .expert-title {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .expert-social a {
-            color: var(--accent-white);
-            font-size: 1.5rem;
-            margin: 0 8px;
-            transition: color 0.3s ease, transform 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        .expert-social a:hover {
-            color: var(--accent-red);
-            transform: scale(1.1);
+        /* Removed scroller animation for static sponsor list */
+        .scroller {
+            display: flex;
+            width: auto;
+            animation: none;
         }
         
+        .scroller:hover {
+            animation-play-state: paused;
+        }
+
+        /* Team Section Redesign */
+         
         /* Team Section */
         .team {
             background-color: var(--secondary-bg);
@@ -985,66 +997,106 @@
             transform: scale(1.1);
         }
 
-        /* Back to Top Button */
-        #back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: var(--accent-red);
-            color: var(--accent-white);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-            z-index: 999;
-        }
 
-        #back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(-5px);
-        }
-
-        #back-to-top:hover {
-            box-shadow: 0 0 25px rgba(255, 0, 0, 1);
-            transform: translateY(-8px) scale(1.05);
-        }
-
-        /* Footer */
-        .footer {
+        /* Contact Us Section Styles */
+        /* Contact Us Section Styles */
+        .contact-us {
             background-color: var(--primary-bg);
-            color: var(--text-light);
             text-align: center;
-            padding: 30px 0;
-            border-top: 1px solid rgba(255, 0, 0, 0.3);
-            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        .footer p {
-            margin-bottom: 10px;
+        /* Animated glowing background for the contact section */
+        .contact-us::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.15) 0%, transparent 50%);
+            border-radius: 50%;
+            animation: pulseGlow 5s infinite ease-in-out;
+            z-index: 0; /* Position behind content */
+            transform: translate(-50%, -50%);
         }
 
-        .footer .social-links a {
-            color: var(--accent-white);
-            font-size: 1.5rem;
-            margin: 0 10px;
-            transition: color 0.3s ease, transform 0.3s ease;
+        @keyframes pulseGlow {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0.5;
+            }
         }
 
-        .footer .social-links a:hover {
+        .contact-us h2, .contact-content {
+            position: relative;
+            z-index: 1; /* Ensure content is above the animated background */
+        }
+
+        .contact-us h2 {
+            font-size: 2.8rem;
             color: var(--accent-red);
-            transform: scale(1.1);
+            margin-bottom: 40px;
+        }
+        
+        .contact-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: center;
         }
 
-        /* Problem Statements Section */
+        .contact-details {
+            /* Main changes start here */
+            display: flex;
+            flex-direction: row; /* Arranges the contact items horizontally */
+            justify-content: center;
+            align-items: center; /* Aligns the items vertically in the middle */
+            flex-wrap: wrap; /* Allows the items to wrap to a new line on smaller screens */
+            gap: 50px;
+            max-width: 900px; /* Optional: Sets a max-width for better control on large screens */
+            margin: 0 auto; /* Centers the container */
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            /* Optional: Sets a minimum width for consistent spacing */
+            min-width: 200px;
+        }
+
+        .contact-item i {
+            font-size: 2.5rem;
+            color: var(--accent-red);
+            margin-bottom: 15px;
+        }
+
+        .contact-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-item p, .contact-item a {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        .contact-form-container {
+            display: none; /* Keep the form hidden */
+        }
+
+                /* Problem Statements Section */
         .problem-statements {
             background-color: var(--primary-bg);
             text-align: center;
@@ -1161,258 +1213,107 @@
             display: none; /* Hidden by default, shown by JS */
         }
 
+        
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--accent-red);
+            color: var(--accent-white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            z-index: 999;
+        }
 
-        /* Responsive Design */
+        #back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-5px);
+        }
+
+        #back-to-top:hover {
+            box-shadow: 0 0 25px rgba(255, 0, 0, 1);
+            transform: translateY(-8px) scale(1.05);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 0, 0, 0.3);
+            font-size: 0.9rem;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer .social-links a {
+            color: var(--accent-white);
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .footer .social-links a:hover {
+            color: var(--accent-red);
+            transform: scale(1.1);
+        }
+
+        /* Mobile-specific styles for the hamburger menu */
         @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .header {
-                height: auto;
-                top: 10px;
-                padding: 15px 20px;
-                border-radius: 15px;
-                flex-wrap: wrap;
-                justify-content: space-between;
-            }
-
-            .header-left-group {
-                flex-grow: 1;
-                justify-content: space-between;
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .nav-menu {
+            .header-nav {
                 display: none;
                 flex-direction: column;
-                width: 100%;
-                text-align: center;
-                background-color: rgba(26, 26, 26, 0.9);
-                padding: 10px 0;
-                margin-left: 0;
+                position: absolute;
+                top: 70px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(26, 26, 26, 0.95);
+                backdrop-filter: blur(10px);
+                width: 90%;
                 border-radius: 10px;
+                padding: 20px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+                z-index: 990;
             }
 
-            .nav-menu.active {
+            .header-nav.active {
                 display: flex;
             }
 
-            .nav-menu li {
-                margin: 10px 0;
-            }
-
-            .header-btn {
-                order: 2;
-            }
-            
-            .hamburger {
-                display: block;
-                order: 1;
-            }
-
-            .about-content {
+            .nav-menu {
                 flex-direction: column;
+                gap: 20px;
             }
 
-            .about-text {
-                padding-right: 0;
-                margin-bottom: 30px;
+            .nav-menu li {
+                margin: 0;
             }
 
-            /* Timeline Responsive Adjustments */
-            .vertical-timeline-container {
-                padding: 0 10px;
-            }
-
-            .timeline-line-background {
-                left: 30px;
-            }
-
-            #timeline-dots-container {
-                left: 30px;
-            }
-
-            .timeline-dot {
-                left: 30px;
-                transform: translateX(-50%);
-            }
-
-            .timeline-item {
-                flex-direction: row !important;
-                justify-content: flex-start;
-                padding-left: 60px;
-            }
-
-            .timeline-item:nth-child(odd) .event-details,
-            .timeline-item:nth-child(even) .event-details {
-                margin-right: 0;
-                margin-left: 0;
-                width: calc(100% - 60px);
-            }
-
-            .pacman-marker {
-                left: 30px;
-                transform: translate(-50%, -50%);
-            }
-
-            .event-details {
-                padding: 20px 25px;
-            }
-            .event-details .event-title {
-                font-size: 1.4rem;
-            }
-            .event-details .event-description {
-                font-size: 0.95rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            section {
-                padding: 60px 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .logo {
-                font-size: 1.5rem;
-            }
-
-            .about h2, .timeline h2, .faq h2, .experts-judges h2, .team h2 {
-                font-size: 2.2rem;
-            }
-
-            .highlight-card h3 {
-                font-size: 1.3rem;
-            }
-
-            .accordion-header {
-                font-size: 1.1rem;
-                padding: 15px;
-            }
-
-            .expert-photo, .member-photo {
-                width: 100px;
-                height: 100px;
-            }
-
-            .expert-name, .member-name {
+            .nav-menu a {
                 font-size: 1.2rem;
             }
-
-            #back-to-top {
-                width: 45px;
-                height: 45px;
-                font-size: 1.3rem;
-                bottom: 20px;
-                right: 20px;
+            
+            .header .header-content-wrapper {
+                flex-wrap: wrap;
             }
 
-            .timeline .subheading {
-                font-size: 1.1rem;
-            }
-            .pacman-marker {
-                width: 50px;
-                height: 50px;
-                font-size: 1.5rem;
-            }
-            .pacman-marker::before {
-                border-top: 25px solid var(--accent-red);
-                border-right: 25px solid transparent;
-                border-bottom: 25px solid var(--accent-red);
-                border-left: 25px solid var(--accent-red);
-                clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
-            }
-            .timeline-line-background {
-                left: 30px;
-            }
-            #timeline-dots-container {
-                left: 30px;
-            }
-            .nav-menu a {
-            white-space: nowrap;
-            }
-
-            /* About section specific adjustments for mobile */
-            .about-background {
-                background-size: contain; /* Change to contain for mobile */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 0.9rem;
-            }
-
-            .btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-
-            .logo {
-                font-size: 1.3rem;
-            }
-
-            .about h2, .timeline h2, .faq h2, .experts-judges h2, .team h2 {
-                font-size: 1.8rem;
-            }
-
-            .experts-grid, .team-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .expert-card, .team-member {
-                padding: 20px;
-            }
-
-            .timeline-item {
-                padding-left: 70px;
-            }
-            .timeline-item:nth-child(odd) .event-details,
-            .timeline-item:nth-child(even) .event-details {
-                width: calc(100% - 70px);
-            }
-            .pacman-marker {
-                width: 45px;
-                height: 45px;
-                font-size: 1.3rem;
-                left: 25px;
-            }
-            .pacman-marker::before {
-                border-top: 22.5px solid var(--accent-red);
-                border-right: 22.5px solid transparent;
-                border-bottom: 22.5px solid var(--accent-red);
-                border-left: 22.5px solid var(--accent-red);
-                clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
-            }
-            .timeline-line-background {
-                left: 25px;
-            }
-            #timeline-dots-container {
-                left: 25px;
-            }
-            .nav-menu a {
-            white-space: nowrap;
-            }
-
-            /* About section specific adjustments for mobile */
-            .about-background {
-                background-size: contain; /* Change to contain for mobile */
+            .hamburger {
+                display: block;
             }
         }
     </style>
@@ -1430,16 +1331,16 @@
         <div class="header-content-wrapper">
             <div class="header-left-group">
                 <a href="#" class="logo">QTUXATHON <span>3.0</span></a>
-                <!-- <a href="#" class="header-btn">Register Now</a> -->
             </div>
             <nav class="header-nav">
                 <ul class="nav-menu">
                     <li><a href="#about">About</a></li>
                     <li><a href="#problem-statements">Problem Statements</a></li>
                     <li><a href="#timeline">Timeline</a></li>
-                    <li><a href="#experts-judges">Experts & Judges</a></li>
-                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#sponsors">Sponsors</a></li>
                     <li><a href="#team">Team</a></li>
+                    <!-- <li><a href="#faq">FAQ</a></li> -->
+                    <li><a href="#contact-us">Contact Us</a></li>
                 </ul>
             </nav>
             <div class="hamburger">
@@ -1539,7 +1440,6 @@
 
                 <!-- Problem statements for each category (initially hidden) -->
                 <div class="accordion-container">
-
                     <!-- AI & Cybersecurity Problems -->
                     <div class="accordion-item" data-category="ai" data-aos="fade-up" data-aos-delay="100">
                         <div class="accordion-header">
@@ -1624,17 +1524,6 @@
                         </div>
                     </div>
 
-                    <!-- AR/VR / Drones / Game Development Problems
-                    <div class="accordion-item" data-category="arvr" data-aos="fade-up" data-aos-delay="600">
-                        <div class="accordion-header">
-                            AR/VR / Drones / Game Development Problems
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Problem statements for AR/VR / Drones / Game Development will be announced soon. Stay tuned!</p>
-                        </div>
-                    </div> -->
-
                     <!-- Open Innovation Problems -->
                     <div class="accordion-item" data-category="open" data-aos="fade-up" data-aos-delay="700">
                         <div class="accordion-header">
@@ -1642,7 +1531,7 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
-                            <p>Get ready to bring your ideas to life !</p>
+                            <p>Get ready to bring your ideas to life!</p>
                         </div>
                     </div>
                 </div>
@@ -1650,7 +1539,8 @@
         </div>
     </section>
 
-      <section id="timeline" class="timeline">
+    <!-- Timeline Section -->
+    <section id="timeline" class="timeline">
         <div class="container">
             <h2 data-aos="fade-down">Event Timeline</h2>
             <p class="subheading" data-aos="fade-up" data-aos-delay="100">Here's what your journey will look like.</p>
@@ -1694,7 +1584,7 @@
                         <p class="event-description">We will announce the shortlisted teams for the in-person hackathon.</p>
                     </div>
                 </div>
-                    <div class="timeline-item" data-aos="fade-right" data-aos-delay="500" data-event-start="2025-08-18" data-event-end="2025-08-18">
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="500" data-event-start="2025-08-18" data-event-end="2025-08-18">
                     <div class="event-details">
                         <div class="event-date">Sep 06 - Sep 09, 2025</div>
                         <h4 class="event-title">Round 2 Confirmation</h4>
@@ -1705,10 +1595,10 @@
                     <div class="event-details">
                         <div class="event-date">Sep 11-12, 2025</div>
                         <h4 class="event-title">Hack Day</h4>
-                        <p class="event-description">The moment you've all been waiting for. Let the 36-hour coding marathon begin!</p>
+                        <p class="event-description">The moment you've all been waiting for. Let the 24-hour coding marathon begin!</p>
                     </div>
                 </div>
-                    <div class="timeline-item" data-aos="fade-right" data-aos-delay="700" data-event-start="2025-09-04" data-event-end="2025-09-04">
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="700" data-event-start="2025-09-04" data-event-end="2025-09-04">
                     <div class="event-details">
                         <div class="event-date">Sep 12, 2025</div>
                         <h4 class="event-title">Winners Announced</h4>
@@ -1719,119 +1609,22 @@
         </div>
     </section>
 
-    <section id="faq" class="faq">
+    <!-- NEW: Sponsors Section -->
+    <section id="sponsors" class="sponsors">
         <div class="container">
-            <h2 data-aos="fade-down">Frequently Asked Questions</h2>
-            <div class="accordion-container">
-                <div class="accordion-item" data-aos="fade-up" data-aos-delay="200">
-                    <div class="accordion-header">
-                        What even is a hackathon?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <p>A hackathon is where you turn your crazy ideas into real projects. We provide hardware, mentors, fun activities, speakers, workshops, food, friends, and so much more. You take care of hacking; we’ll take care of you.</p>
-                    </div>
-                </div>
-                <div class="accordion-item" data-aos="fade-up" data-aos-delay="300">
-                    <div class="accordion-header">
-                        How do I reach the venue?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Just show up Here [ Ohh Hii ] – it’s the place we spammed all over the posters. Still lost? Just follow the swarm of nerds with laptops and dark circles under their eyes.</p>
-                    </div>
-                </div>
-                <div class="accordion-item" data-aos="fade-up" data-aos-delay="400">
-                    <div class="accordion-header">
-                        Is there a dress code?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <p>The standard dress code, as per Sairam institutions, is formal wear.</p>
-                    </div>
-                </div>
-                <div class="accordion-item" data-aos="fade-up" data-aos-delay="500">
-                    <div class="accordion-header">
-                        What can I build?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Literally anything – from a to-do list app that roasts you to a fridge that tweets. Just don’t build another ChatGPT clone or Skynet. We like Earth, thanks.</p>
-                    </div>
-                </div>
-                <div class="accordion-item" data-aos="fade-up" data-aos-delay="600">
-                    <div class="accordion-header">
-                        What if I have never coded?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Perfect. We welcome chaos. Come learn, vibe, and wing it like everyone else. We'll have mentors, friends, and a LOT of Stack Overflow.</p>
-                    </div>
-                </div>
-                <div class="accordion-item" data-aos="fade-up" data-aos-delay="700">
-                    <div class="accordion-header">
-                        Do I get cool hardware?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Maybe. Maybe not. Depends on what you mean by "cool". Bring your own stuff if you're fancy. We'll see what we can offer.</p>
-                    </div>
-                </div>
-                <div class="accordion-item" data-aos="fade-up" data-aos-delay="800">
-                    <div class="accordion-header">
-                        Who can attend?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <p>College students from all over India.</p>
-                    </div>
-                </div>
-                <div class="accordion-item" data-aos="fade-up" data-aos-delay="900">
-                    <div class="accordion-header">
-                        Still confused?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Yeah Mail us your questions. Or better yet, just DM us on Insta like everyone else.</p>
-                    </div>
-                </div>
-                <div class="accordion-item" data-aos="fade-up" data-aos-delay="1000">
-                    <div class="accordion-header">
-                        What should I bring with me?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Your laptop, charger, ID card, and anything else that keeps you functioning. Bonus points if you bring good energy and meme supplies.</p>
-                    </div>
-                </div>
-                <div class="accordion-item" data-aos="fade-up" data-aos-delay="1100">
-                    <div class="accordion-header">
-                        What’s the food situation?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Oh, you’ll thrive. We’ve got meals, snacks, drinks, and enough caffeine to power a small city. You won't go hungry, we promise.</p>
-                    </div>
+            <h2 data-aos="fade-down">Our Valued Sponsors</h2>
+            <div class="sponsor-card-group" data-aos="fade-up" data-aos-delay="100">
+                <!-- Sponsor 3 -->
+                <div class="sponsor-card">
+                    <a href="https://www.linkedin.com/company/wyntrix/posts/?feedView=all" target="_blank">
+                           <img src="Wyn.png" alt="Wyntrix Logo">
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="experts-judges" class="experts-judges">
-        <div class="container">
-            <h2 data-aos="fade-down">Event Staff Co-Organizers</h2>
-            <div class="experts-grid">
-                <div class="expert-card" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="Dayasir.jpeg" alt="Expert Photo 1" class="expert-photo">
-                    <h3 class="expert-name">Dayasagar G</h3>
-                    <p class="expert-title">Asst. Professor - Dept. of Cybersecurity</p>
-                    <div class="expert-social">
-                        <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
     <section id="team" class="team">
         <div class="container">
@@ -1839,82 +1632,93 @@
 
             <!-- Lead Organizers -->
             <div class="team-category">
-                <!-- <h3 data-aos="fade-up" data-aos-delay="100">Lead Organizers (7 Members)</h3> -->
+                <h3 data-aos="fade-up" data-aos-delay="100">Event Staff Co-Organizers</h3>
                 <div class="team-grid">
                     <div class="team-member" data-aos="zoom-in" data-aos-delay="100">
                         <div class="member-photo-wrapper">
-                            <img src="Rohith.jpeg" alt="Arjun Reddy" class="member-photo">
+                            <img src="Dayasir.jpeg" alt="Dayasagar G" class="member-photo">
                         </div>
                         <div class="member-info">
-                        <h3 class="member-name">Rohith Vijay R</h3>
-                        <p class="member-role">Lead Organizer <br> Technical Lead </p>
+                            <h3 class="member-name">Dayasagar G</h3>
+                            <p class="member-role">Asst. Professor - Dept. of Cybersecurity</p>
                             <div class="member-social">
-                                <a href="https://www.linkedin.com/in/rohithvijayr/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                                <!-- <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a> -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
-                        <div class="member-photo-wrapper">
-                            <img src="cletus.jpeg" alt="Lead Organizer 3" class="member-photo">
-                        </div>
-                        <div class="member-info">
-                        <h3 class="member-name">Cletus Albin M R</h3>
-                        <p class="member-role">Lead Organizer <br> Media Team Lead</p>
-                            <div class="member-social">
-                                <a href="https://www.linkedin.com/in/cletus-albin-m-r-396025299/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                                <!-- <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a> -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
-                        <div class="member-photo-wrapper">
-                            <img src="Shivani.jpeg" alt="Lead Organizer 4" class="member-photo">
-                        </div>
-                        <div class="member-info">
-                        <h3 class="member-name">‎Shivani M S‎ ‎ ‎ </h3>
-                        <p class="member-role">Lead Organizer <br> Content Lead</p>
-                            <div class="member-social">
-                                <a href="https://www.linkedin.com/in/shivani-ms/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                                <!-- <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a> -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
-                        <div class="member-photo-wrapper">
-                            <img src="shanmitha.jpg" alt="Lead Organizer 4" class="member-photo">
-                        </div>
-                        <div class="member-info">
-                        <h3 class="member-name">Shanmitha S <br> </h3>
-                        <p class="member-role">Co-Organizer <br> Content Lead</p>
-                            <div class="member-social">
-                                <a href="https://www.linkedin.com/in/shanmithasuresh16/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                                <!-- <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="team-member" data-aos="zoom-in" data-aos-delay="500">
-                        <div class="member-photo-wrapper">
-                            <img src="gokul.jpg" alt="Lead Organizer 5" class="member-photo">
-                        </div>
-                        <div class="member-info">
-                            <h3 class="member-name">‎ ‎ ‎ ‎  Gokul D ‎ ‎ ‎  ‎</h3>
-                            <p class="member-role">Co-Organizer <br>Logistics Lead</p>
-                            <div class="member-social">
-                                <a href="https://www.linkedin.com/in/goocoolofficial/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                                <!-- <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a> -->
+                                <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Design & Content Team -->
+            <!-- Core Team -->
             <div class="team-category">
-                <h3 data-aos="fade-up" data-aos-delay="100">Magic team</h3>
+                <h3 data-aos="fade-up" data-aos-delay="100">Core Team</h3>
+                <div class="team-grid">
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="member-photo-wrapper">
+                            <img src="Rohith.jpeg" alt="Rohith Vijay R" class="member-photo">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">Rohith Vijay R</h3>
+                            <p class="member-role">Lead Organizer <br> Technical Lead </p>
+                            <div class="member-social">
+                                <a href="https://www.linkedin.com/in/rohithvijayr/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="member-photo-wrapper">
+                            <img src="cletus.jpeg" alt="Cletus Albin M R" class="member-photo">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">Cletus Albin M R</h3>
+                            <p class="member-role">Lead Organizer <br> Media Team Lead</p>
+                            <div class="member-social">
+                                <a href="https://www.linkedin.com/in/cletus-albin-m-r-396025299/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="member-photo-wrapper">
+                            <img src="Shivani.jpeg" alt="Shivani M S" class="member-photo">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">‎Shivani M S‎ ‎ ‎ </h3>
+                            <p class="member-role">Lead Organizer <br> Content Lead</p>
+                            <div class="member-social">
+                                <a href="https://www.linkedin.com/in/shivani-ms/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="member-photo-wrapper">
+                            <img src="shanmitha.jpg" alt="Shanmitha S" class="member-photo">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">Shanmitha ‎ S</h3>
+                            <p class="member-role">Lead Organizer <br> Content Lead</p>
+                            <div class="member-social">
+                                <a href="https://www.linkedin.com/in/shanmithasuresh16/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="500">
+                        <div class="member-photo-wrapper">
+                            <img src="gokul.jpg" alt="Gokul D" class="member-photo">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">‎ ‎ ‎ ‎  Gokul D ‎ ‎ ‎  ‎</h3>
+                            <p class="member-role">Lead Organizer <br>Logistics Lead</p>
+                            <div class="member-social">
+                                <a href="https://www.linkedin.com/in/goocoolofficial/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Magic Team -->
+            <div class="team-category">
+                <h3 data-aos="fade-up" data-aos-delay="100">Magic Team</h3>
                 <div class="team-grid">
                     <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
                         <div class="member-photo-wrapper">
@@ -1976,7 +1780,56 @@
                             </div>
                         </div>
                     </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Contact U`s Section -->
+    <section id="contact-us" class="contact-us">
+        <div class="container">
+            <h2 data-aos="fade-down">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-details" data-aos="fade-right" data-aos-delay="200">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Our Location</h3>
+                        <p><a href="https://maps.app.goo.gl/eVxFisy1vM4Zbxb2A" target="_blank">Sri Sairam Engineering College, Sai Leo Nagar, West Tambaram, Chennai, Tamil Nadu 600044</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email Us</h3>
+                        <p><a href="mailto:qtuxathon24@gmail.com">qtuxathon24@gmail.com</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <h3>Call Us</h3>
+                        <p>1. Rohith Vijay R - +91 73583 20034</p>
+                        <p>2. Cletus Albin M R - +91 98946 03671</p>
+                        <p>3. Shivani M S - +91 63747 85113</p>
+                        
+                        <p>4. Shanmitha S - +91 91764 03225</p>
+                        <p>5. Gokul D - +91 93844 77075</p>
+                        
+                    </div>
                 </div>
+                <!-- <div class="contact-form-container" data-aos="fade-left" data-aos-delay="400">
+                    <form action="#" class="contact-form">
+                        <h3>Send us a message</h3>
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" required> 
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div> -->
             </div>
         </div>
     </section>
@@ -2343,28 +2196,16 @@
                     const dotCenterY = dotRect.top + (dotRect.height / 2);
 
                     if (dot.classList.contains('main-dot')) {
-                        if (scrollDirection === 'down') {
-                            if (pacmanCenterY > dotCenterY) {
-                                dot.classList.add('passed');
-                            }
+                        if (scrollY + (viewportHeight / 2) > dotRect.top + scrollY) {
+                            dot.classList.add('passed');
                         } else {
-                            if (pacmanCenterY < dotCenterY) {
-                                dot.classList.remove('passed');
-                            }
+                            dot.classList.remove('passed');
                         }
                     } else {
-                        if (scrollDirection === 'down') {
-                            if (pacmanCenterY > dotCenterY - eatingZone && pacmanCenterY < dotCenterY + eatingZone) {
-                                dot.classList.add('eaten');
-                            } else if (pacmanCenterY > dotCenterY + eatingZone) {
-                                dot.classList.add('eaten');
-                            }
+                        if (scrollY + (viewportHeight / 2) > dotRect.top + scrollY) {
+                            dot.classList.add('eaten');
                         } else {
-                            if (pacmanCenterY < dotCenterY + eatingZone && pacmanCenterY > dotCenterY - eatingZone) {
-                                dot.classList.remove('eaten');
-                            } else if (pacmanCenterY < dotCenterY - eatingZone) {
-                                dot.classList.remove('eaten');
-                            }
+                            dot.classList.remove('eaten');
                         }
                     }
                 });
