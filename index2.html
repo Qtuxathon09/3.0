@@ -97,7 +97,7 @@
             transition: opacity 1s ease-in-out;
         }
 
-        /* Main website styles (unchanged from your original code) */
+        /* Main website styles */
         .header-content-wrapper {
             display: flex;
             align-items: center;
@@ -205,8 +205,8 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 95%; /* Increased width for more space */
-            max-width: 1300px; /* Increased max-width */
+            width: 95%;
+            max-width: 1300px;
             height: 60px;
             padding: 0 20px;
             box-sizing: border-box;
@@ -220,7 +220,6 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .header-left {
@@ -418,20 +417,20 @@
             text-align: center;
             overflow: hidden;
         }
-        
+
         .about-background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-size: cover; /* Default to cover for larger screens */
+            background-size: cover;
             background-position: center;
-            background-repeat: no-repeat; /* Ensure no repeat */
-            transition: background-image 1s ease-in-out; /* Smooth transition for image change */
-            z-index: 0; /* Behind content */
+            background-repeat: no-repeat;
+            transition: background-image 1s ease-in-out;
+            z-index: 0;
         }
-        
+
         .about-background-overlay {
             position: absolute;
             top: 0;
@@ -515,40 +514,6 @@
             background-color: var(--primary-bg);
             text-align: center;
             padding: 80px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* Animated background for the timeline section */
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: -200%;
-            left: 0;
-            width: 100%;
-            height: 300%;
-            background:
-                /* Subtle grid lines */
-                repeating-linear-gradient(to right, rgba(255, 0, 0, 0.05), rgba(255, 0, 0, 0.05) 1px, transparent 1px, transparent 20px),
-                repeating-linear-gradient(to bottom, rgba(255, 0, 0, 0.05), rgba(255, 0, 0, 0.05) 1px, transparent 1px, transparent 20px);
-            background-size: 20px 20px;
-            animation: moveGrid 30s linear infinite;
-            z-index: 0;
-            opacity: 0.5;
-        }
-
-        @keyframes moveGrid {
-            from {
-                transform: translateY(0);
-            }
-            to {
-                transform: translateY(20px);
-            }
-        }
-        
-        .timeline h2, .timeline .subheading, .vertical-timeline-container {
-            position: relative;
-            z-index: 1;
         }
 
         .timeline h2 {
@@ -697,83 +662,16 @@
             margin-left: 30px;
         }
 
-        /* Remove event-marker from timeline-item, as it's now a single moving element */
+        /* Hide event-marker from timeline-item */
         .timeline-item .event-marker {
             display: none;
         }
-
-        /* FAQ Section */
-        .faq {
-            background-color: var(--secondary-bg);
-            text-align: center;
-        }
-
-        .faq h2 {
-            font-size: 2.8rem;
-            color: var(--accent-red);
-            margin-bottom: 40px;
-        }
-
-        .accordion-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .accordion-item {
-            background-color: var(--primary-bg);
-            margin-bottom: 15px;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 0, 0, 0.3);
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
-            transition: box-shadow 0.3s ease;
-        }
-
-        .accordion-item:hover {
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-        }
-
-        .accordion-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            cursor: pointer;
-            background-color: var(--primary-bg);
-            color: var(--accent-red);
-            font-size: 1.25rem;
-            font-weight: 600;
-            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
-        }
-
-        .accordion-header i {
-            transition: transform 0.3s ease;
-        }
-
-        .accordion-header.active i {
-            transform: rotate(180deg);
-        }
-
-        .accordion-content {
-            padding: 0 20px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
-            color: var(--text-light);
-            background-color: var(--primary-bg);
-        }
-
-        .accordion-content p {
-            padding-bottom: 20px;
-        }
-
+        
         /* Sponsors Section (UPDATED) */
         .sponsors {
             background-color: var(--secondary-bg);
             text-align: center;
-            overflow: hidden;
-            padding-top: 40px;
-            padding-bottom: 40px;
+            padding: 40px 0;
         }
 
         .sponsors h2 {
@@ -782,31 +680,32 @@
             margin-bottom: 40px;
         }
 
-        .sponsor-card-group {
+        /* Style for the container holding a fixed number of sponsors */
+        .sponsor-container {
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-wrap: wrap;
-            gap: 30px;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
-
+        
         .sponsor-card {
             background-color: var(--primary-bg);
             border-radius: 10px;
             padding: 25px;
-            margin: 0;
             text-align: center;
             border: 1px solid rgba(255, 0, 0, 0.2);
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             flex-shrink: 0;
-            width: 200px;
+            width: 250px;
             height: 150px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
+        
         .sponsor-card a {
             display: block;
             width: 100%;
@@ -830,17 +729,7 @@
             transform: scale(1.05);
         }
 
-        .scroller {
-            display: flex;
-            width: auto;
-            animation: none;
-        }
-        
-        .scroller:hover {
-            animation-play-state: paused;
-        }
-
-        /* Team Section Redesign */
+        /* Team Section */
         .team {
             background-color: var(--secondary-bg);
             text-align: center;
@@ -983,8 +872,7 @@
             color: var(--accent-red);
             transform: scale(1.1);
         }
-
-
+        
         /* Contact Us Section Styles */
         .contact-us {
             background-color: var(--primary-bg);
@@ -1079,7 +967,89 @@
         .contact-form-container {
             display: none;
         }
+                /* --- CONTACT US FIXES --- */
+        .contact-details {
+            flex-direction: column; /* Stack contact items vertically */
+            gap: 30px;
+        }
         
+        .contact-item {
+            min-width: auto; /* Remove the minimum width constraint */
+            width: 100%;
+        }
+
+        /* --- PROBLEM STATEMENTS FIXES --- */
+        .domain-categories {
+            flex-direction: row; /* Keep as row but allow wrapping */
+            justify-content: center;
+        }
+
+        .domain-card {
+            min-width: unset; /* Allow cards to shrink */
+            flex: 1; /* Distribute space evenly */
+            max-width: 150px;
+        }
+    
+
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--accent-red);
+            color: var(--accent-white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            z-index: 999;
+        }
+
+        #back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-5px);
+        }
+
+        #back-to-top:hover {
+            box-shadow: 0 0 25px rgba(255, 0, 0, 1);
+            transform: translateY(-8px) scale(1.05);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 0, 0, 0.3);
+            font-size: 0.9rem;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer .social-links a {
+            color: var(--accent-white);
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .footer .social-links a:hover {
+            color: var(--accent-red);
+            transform: scale(1.1);
+        }
+
         /* Problem Statements Section */
         .problem-statements {
             background-color: var(--primary-bg);
@@ -1192,214 +1162,265 @@
             background-color: var(--secondary-bg);
             border-radius: 8px;
             border: 1px solid rgba(255, 0, 0, 0.2);
-            display: none;
-        }
-        
-        /* Back to Top Button */
-        #back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: var(--accent-red);
-            color: var(--accent-white);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-            z-index: 999;
+            display: none; /* Hidden by default, shown by JS */
         }
 
-        #back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(-5px);
-        }
 
-        #back-to-top:hover {
-            box-shadow: 0 0 25px rgba(255, 0, 0, 1);
-            transform: translateY(-8px) scale(1.05);
-        }
-
-        /* Footer */
-        .footer {
-            background-color: var(--primary-bg);
-            color: var(--text-light);
-            text-align: center;
-            padding: 30px 0;
-            border-top: 1px solid rgba(255, 0, 0, 0.3);
-            font-size: 0.9rem;
-        }
-
-        .footer p {
-            margin-bottom: 10px;
-        }
-
-        .footer .social-links a {
-            color: var(--accent-white);
-            font-size: 1.5rem;
-            margin: 0 10px;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .footer .social-links a:hover {
-            color: var(--accent-red);
-            transform: scale(1.1);
-        }
-
-        /* Mobile-specific styles for the hamburger menu */
+        /* Responsive Design */
         @media (max-width: 992px) {
-            .header-nav {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 70px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: rgba(26, 26, 26, 0.95);
-                backdrop-filter: blur(10px);
-                width: 90%;
-                border-radius: 10px;
-                padding: 20px;
-                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-                z-index: 990;
-            }
-
-            .header-nav.active {
-                display: flex;
-            }
-
-            .nav-menu {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .nav-menu li {
-                margin: 0;
-            }
-
-            .nav-menu a {
-                font-size: 1.2rem;
-            }
-            
-            .header .header-content-wrapper {
-                flex-wrap: wrap;
-            }
-
-            .hamburger {
-                display: block;
-            }
-        }
-
-        /* --- Custom Mobile-First CSS Fixes --- */
-        @media (max-width: 768px) {
-            /* General padding adjustments for smaller screens */
-            section {
-                padding: 60px 20px;
-            }
-
-            /* --- HEADER & NAVIGATION FIXES --- */
-            .header {
-                width: 100%; /* Make header full width */
-                left: 0;
-                transform: none; /* Remove horizontal centering transform */
-                top: 0; /* Align to the very top */
-                border-radius: 0; /* Remove rounded corners for full-width look */
-                border-left: none;
-                border-right: none;
-                padding: 0 15px; /* Add padding to prevent content from touching edges */
-            }
-            
-            .logo {
-                font-size: 1.5rem; /* Shrink logo text */
-            }
-
-            /* --- HERO SECTION FIXES --- */
             .hero h1 {
-                font-size: 2.2rem; /* Shrink main heading */
+                font-size: 3rem;
             }
 
             .hero p {
-                font-size: 1.1rem; /* Shrink subheading */
+                font-size: 1.2rem;
             }
 
-            #countdown-timer {
-                font-size: 1.5rem; /* Shrink countdown numbers */
-                gap: 10px;
+            .header {
+                height: auto;
+                top: 10px;
+                padding: 15px 20px;
+                border-radius: 15px;
+                flex-wrap: wrap;
+                justify-content: space-between;
             }
 
-            #countdown-timer div {
-                min-width: 65px; /* Adjust min width for small screens */
-                padding: 8px 10px;
+            .header-content-wrapper {
+                flex-wrap: wrap;
             }
-
-            .hero-actions {
-                flex-direction: column; /* Stack buttons vertically */
-                gap: 15px;
-            }
-
-            /* --- ABOUT SECTION FIXES --- */
-            .about-content {
-                flex-direction: column; /* Stack about text and highlights vertically */
-            }
-
-            .about-text, .about-highlights {
-                min-width: auto;
+            
+            .header-left-group {
+                flex-grow: 1;
+                justify-content: space-between;
                 width: 100%;
-                padding-right: 0; /* Remove padding that would cause spacing issues */
+                margin-bottom: 10px;
             }
 
-            /* --- TIMELINE FIXES --- */
-            /* Ensure timeline items stack correctly on mobile */
-            .timeline-item {
-                flex-direction: column !important; /* Force all items to stack vertically */
-                align-items: center;
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                background-color: rgba(26, 26, 26, 0.9);
+                padding: 10px 0;
+                margin-left: 0;
+                border-radius: 10px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu li {
+                margin: 10px 0;
+            }
+
+            .header-btn {
+                order: 2;
+            }
+            
+            .hamburger {
+                display: block;
+                order: 1;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-text {
+                padding-right: 0;
                 margin-bottom: 30px;
+            }
+
+            /* Timeline Responsive Adjustments */
+            .vertical-timeline-container {
+                padding: 0 10px;
+            }
+
+            .timeline-line-background {
+                left: 30px;
+            }
+
+            #timeline-dots-container {
+                left: 30px;
+            }
+
+            .timeline-dot {
+                left: 30px;
+                transform: translateX(-50%);
+            }
+
+            .timeline-item {
+                flex-direction: row !important;
+                justify-content: flex-start;
+                padding-left: 60px;
             }
 
             .timeline-item:nth-child(odd) .event-details,
             .timeline-item:nth-child(even) .event-details {
-                margin-left: 0;
                 margin-right: 0;
-                width: 100%;
+                margin-left: 0;
+                width: calc(100% - 60px);
             }
 
-            .vertical-timeline-container {
-                padding: 0;
-            }
-            
-            .timeline-line-background, #timeline-dots-container, .pacman-marker {
-                display: none; /* Hide the Pac-Man animation for a cleaner mobile experience */
+            .pacman-marker {
+                left: 30px;
+                transform: translate(-50%, -50%);
             }
 
-            /* --- CONTACT US FIXES --- */
-            .contact-details {
-                flex-direction: column; /* Stack contact items vertically */
-                gap: 30px;
+            .event-details {
+                padding: 20px 25px;
             }
-            
-            .contact-item {
-                min-width: auto; /* Remove the minimum width constraint */
-                width: 100%;
+            .event-details .event-title {
+                font-size: 1.4rem;
+            }
+            .event-details .event-description {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 0;
             }
 
-            /* --- PROBLEM STATEMENTS FIXES --- */
-            .domain-categories {
-                flex-direction: row; /* Keep as row but allow wrapping */
-                justify-content: center;
+            .hero h1 {
+                font-size: 2.5rem;
             }
 
-            .domain-card {
-                min-width: unset; /* Allow cards to shrink */
-                flex: 1; /* Distribute space evenly */
-                max-width: 150px;
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .about h2, .timeline h2, .sponsors h2, .team h2, .contact-us h2 {
+                font-size: 2.2rem;
+            }
+
+            .highlight-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .accordion-header {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+
+            .member-photo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .member-name {
+                font-size: 1.2rem;
+            }
+
+            #back-to-top {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .timeline .subheading {
+                font-size: 1.1rem;
+            }
+            .pacman-marker {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            .pacman-marker::before {
+                border-top: 25px solid var(--accent-red);
+                border-right: 25px solid transparent;
+                border-bottom: 25px solid var(--accent-red);
+                border-left: 25px solid var(--accent-red);
+                clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+            }
+            .timeline-line-background {
+                left: 30px;
+            }
+            #timeline-dots-container {
+                left: 30px;
+            }
+            .nav-menu a {
+            white-space: nowrap;
+            }
+
+            /* About section specific adjustments for mobile */
+            .about-background {
+                background-size: contain;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .about h2, .timeline h2, .sponsors h2, .team h2, .contact-us h2 {
+                font-size: 1.8rem;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-member {
+                padding: 20px;
+            }
+
+            .timeline-item {
+                padding-left: 70px;
+            }
+            .timeline-item:nth-child(odd) .event-details,
+            .timeline-item:nth-child(even) .event-details {
+                width: calc(100% - 70px);
+            }
+            .pacman-marker {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+                left: 25px;
+            }
+            .pacman-marker::before {
+                border-top: 22.5px solid var(--accent-red);
+                border-right: 22.5px solid transparent;
+                border-bottom: 22.5px solid var(--accent-red);
+                border-left: 22.5px solid var(--accent-red);
+                clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+            }
+            .timeline-line-background {
+                left: 25px;
+            }
+            #timeline-dots-container {
+                left: 25px;
+            }
+            .nav-menu a {
+            white-space: nowrap;
+            }
+
+            /* About section specific adjustments for mobile */
+            .about-background {
+                background-size: contain;
             }
         }
     </style>
@@ -1575,7 +1596,7 @@
                             <p class="event-description">Develop an advanced AI algorithm beyond transformers, inspired by Qiskit ibm, to achieve faster and more efficient parallel processing for enterprise applications.</p>
                             <h4 class="event-title">QT302 - Quantum-Resistant Cryptography</h4>
                             <p class="event-description">Design a quantum-resistant cryptography solution to protect passwords and sensitive data from being decrypted by quantum computing attacks.</p>
-                            <h4 class="event-title">QT303 - Quantum-Enhanced Supply Chain Optimization for Global Logistics</h4>
+                            <h4 class="event-title">QT302 - Quantum-Enhanced Supply Chain Optimization for Global Logistics</h4>
                             <p class="event-description">Design a hybrid quantum-classical algorithm to optimize supply chains using datasets that include constraints like warehouse capacity, vehicle types, delivery windows, and demand. Implement algorithms such as QAOA or VQE on a quantum machine/simulator, integrate with a classical system, and provide a visualization of optimized routes, costs, and carbon savings.</p>
 
                         </div>
@@ -1618,7 +1639,7 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
-                            <p>Get ready to bring your ideas to life!</p>
+                            <p>Get ready to bring your ideas to life !</p>
                         </div>
                     </div>
                 </div>
@@ -1626,21 +1647,97 @@
         </div>
     </section>
 
-    <!-- NEW: Sponsors Section -->
+    <!-- Event Timeline Section -->
+    <section id="timeline" class="timeline">
+        <div class="container">
+            <h2 data-aos="fade-down">Event Timeline</h2>
+            <p class="subheading" data-aos="fade-up" data-aos-delay="100">Here's what your journey will look like.</p>
+            <div class="vertical-timeline-container">
+                <div class="timeline-line-background"></div>
+                <div id="timeline-dots-container"></div>
+                <div id="pacman-scroller" class="pacman-marker"></div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="100" data-event-start="2025-08-07" data-event-end="2025-08-07">
+                    <div class="event-details">
+                        <div class="event-date">Aug 19, 2025</div>
+                        <h4 class="event-title">Registration Open</h4>
+                        <p class="event-description">Register for one of the biggest in-person hackathons in the world.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="200" data-event-start="2025-08-07" data-event-end="2025-08-14">
+                    <div class="event-details">
+                        <div class="event-date">Aug 19 - Aug 21, 2025</div>
+                        <h4 class="event-title">Form a Team</h4>
+                        <p class="event-description">Find collaborators who match your ambition and complement your skills. For a team of 2-4 members.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="300" data-event-start="2025-08-10" data-event-end="2025-08-10">
+                    <div class="event-details">
+                        <div class="event-date">Aug 21, 2025</div>
+                        <h4 class="event-title">Round 1 Begins (Online Round)</h4>
+                        <p class="event-description">Kickstart your preparation with our expert-led workshops on key technologies.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="400" data-event-start="2025-08-14" data-event-end="2025-08-14">
+                    <div class="event-details">
+                        <div class="event-date">Aug 29, 2025 (Night)</div>
+                        <h4 class="event-title">Idea Submission Deadline</h4>
+                        <p class="event-description">Submit your innovative ideas and get a chance to be shortlisted for the main event.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="500" data-event-start="2025-08-18" data-event-end="2025-08-18">
+                    <div class="event-details">
+                        <div class="event-date">Sep 02 - Sep 05, 2025</div>
+                        <h4 class="event-title">Shortlist Announcement</h4>
+                        <p class="event-description">We will announce the shortlisted teams for the in-person hackathon.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="500" data-event-start="2025-08-18" data-event-end="2025-08-18">
+                    <div class="event-details">
+                        <div class="event-date">Sep 06 - Sep 09, 2025</div>
+                        <h4 class="event-title">Round 2 Confirmation</h4>
+                        <p class="event-description">Shortlisted teams should confirm their participation for Round 2 by Registering and paying the accommodation fee</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="600" data-event-start="2025-09-03" data-event-end="2025-09-04">
+                    <div class="event-details">
+                        <div class="event-date">Sep 11-12, 2025</div>
+                        <h4 class="event-title">Hack Day</h4>
+                        <p class="event-description">The moment you've all been waiting for. Let the 24-hour coding marathon begin!</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="700" data-event-start="2025-09-04" data-event-end="2025-09-04">
+                    <div class="event-details">
+                        <div class="event-date">Sep 12, 2025</div>
+                        <h4 class="event-title">Winners Announced</h4>
+                        <p class="event-description">Celebrate your achievements as we announce the winners and distribute prizes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Updated Sponsors Section -->
     <section id="sponsors" class="sponsors">
         <div class="container">
             <h2 data-aos="fade-down">Our Valued Sponsors</h2>
-            <div class="sponsor-card-group" data-aos="fade-up" data-aos-delay="100">
-                <!-- Sponsor 3 -->
+            <div class="sponsor-container" data-aos="fade-up" data-aos-delay="100">
+                <!-- Sponsor 1 -->
                 <div class="sponsor-card">
                     <a href="https://www.linkedin.com/company/wyntrix/posts/?feedView=all" target="_blank">
-                        <img src="Wyn.png" alt="Wyntrix Logo">
+                       <img src="Wyn.png" alt="Wyntrix Logo">
+                    </a>
+                </div>
+                <!-- Sponsor 2 -->
+                <div class="sponsor-card">
+                    <a href="https://www.linkedin.com/company/altruisty/" target="_blank">
+                        <img src="Alt.png" alt="Altruisty logo">
                     </a>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <!-- Team Section -->
     <section id="team" class="team">
         <div class="container">
@@ -1652,7 +1749,7 @@
                 <div class="team-grid">
                     <div class="team-member" data-aos="zoom-in" data-aos-delay="100">
                         <div class="member-photo-wrapper">
-                            <img src="https://placehold.co/400x400/000000/ffffff?text=Dayasagar+G" alt="Dayasagar G" class="member-photo">
+                            <img src="Dayasir.jpeg" alt="Dayasagar G" class="member-photo">
                         </div>
                         <div class="member-info">
                             <h3 class="member-name">Dayasagar G</h3>
@@ -1830,7 +1927,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2025 QTUXATHON 3.0. All rights reserved.</p>
@@ -1842,7 +1938,6 @@
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
     <button id="back-to-top" title="Back to Top">
         <i class="fas fa-arrow-up"></i>
     </button>
@@ -1851,23 +1946,22 @@
     <script>
         // Global variable to store last scroll position for direction detection
         let lastScrollY = 0;
-        let activeCategory = null; // Track the currently active category
+        let activeCategory = null;
 
         document.addEventListener('DOMContentLoaded', () => {
             // Preloader logic
             const preloader = document.getElementById('preloader');
             const body = document.body;
 
-            // Wait a moment for the initial render, then start the preloader fade out
             setTimeout(() => {
                 if (preloader) {
                     preloader.style.opacity = '0';
                     setTimeout(() => {
                         preloader.style.display = 'none';
-                        body.style.overflow = 'visible'; // Allow scrolling after preloader is gone
-                    }, 500); // Wait for the fade-out transition to complete
+                        body.style.overflow = 'visible';
+                    }, 500);
                 }
-            }, 2000); // You can adjust the preloader display duration here
+            }, 2000);
 
             // Initialize AOS once the content is loaded
             AOS.init({
@@ -1878,17 +1972,11 @@
 
             // Call the function to update timeline status on load
             updateTimelineStatus();
-
-            // Check if we are on a large screen before generating dots
-            // to avoid rendering them on mobile where they are hidden.
-            if (window.innerWidth > 768) {
-                // Generate dots after the DOM is fully loaded and rendered,
-                // to ensure accurate height calculations.
-                setTimeout(() => {
-                    generateTimelineDots();
-                    updatePacmanPosition(); // Set initial Pac-Man position and dot states
-                }, 100);
-            }
+            // Generate dots after the DOM is fully loaded and rendered
+            setTimeout(() => {
+                generateTimelineDots();
+                updatePacmanPosition();
+            }, 100);
 
             // Start the About section background slideshow
             startAboutBackgroundSlideshow();
@@ -1919,10 +2007,8 @@
                     });
 
                     const navMenu = document.querySelector('.nav-menu');
-                    const hamburger = document.querySelector('.hamburger');
                     if (navMenu.classList.contains('active')) {
                         navMenu.classList.remove('active');
-                        hamburger.classList.remove('active');
                     }
                 }
             });
@@ -1961,49 +2047,54 @@
                 }
             }
             // Regenerate dots on resize to ensure correct positioning
-            if (window.innerWidth > 768) {
-                generateTimelineDots();
-                updatePacmanPosition();
-            }
+            generateTimelineDots();
+            updatePacmanPosition();
         });
 
+        // Problem Statements Filtering
+        const domainCards = document.querySelectorAll('.domain-card');
+        const problemAccordionItems = document.querySelectorAll('.problem-statements-list .accordion-item');
+        const noDomainSelectedMessage = document.querySelector('.no-domain-selected-message');
+        let currentlySelectedDomain = null;
 
-        // FAQ Accordion Toggle
-        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        domainCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const clickedCategory = card.dataset.category;
 
-        accordionHeaders.forEach(header => {
-            header.addEventListener('click', () => {
-                const accordionItem = header.closest('.accordion-item');
-                const accordionContent = accordionItem.querySelector('.accordion-content');
-                const icon = header.querySelector('i');
-
-                document.querySelectorAll('.accordion-item').forEach(item => {
-                    if (item !== accordionItem) {
-                        const otherContent = item.querySelector('.accordion-content');
-                        const otherHeader = item.querySelector('.accordion-header');
-                        const otherIcon = otherHeader.querySelector('i');
-
-                        if (otherContent) otherContent.style.maxHeight = null;
-                        if (otherContent) otherContent.style.paddingBottom = '0';
-                        if (otherHeader) otherHeader.classList.remove('active');
-                        if (otherIcon) otherIcon.classList.remove('fa-chevron-up');
-                        if (otherIcon) otherIcon.classList.add('fa-chevron-down');
+                if (currentlySelectedDomain === clickedCategory) {
+                    // If the same card is clicked again, deselect it
+                    domainCards.forEach(dc => dc.classList.remove('active'));
+                    currentlySelectedDomain = null;
+                    
+                    // Hide all problem statements
+                    problemAccordionItems.forEach(item => {
+                        item.style.display = 'none';
+                    });
+                    // Show the "Select a theme" message
+                    if (noDomainSelectedMessage) {
+                        noDomainSelectedMessage.style.display = 'block';
                     }
-                });
+                } else {
+                    // Deselect any previously active card
+                    domainCards.forEach(dc => dc.classList.remove('active'));
+                    // Select the new card
+                    card.classList.add('active');
+                    currentlySelectedDomain = clickedCategory;
 
-                header.classList.toggle('active');
-                if (accordionContent) {
-                    if (accordionContent.style.maxHeight) {
-                        accordionContent.style.maxHeight = null;
-                        accordionContent.style.paddingBottom = '0';
-                        icon.classList.remove('fa-chevron-up');
-                        icon.classList.add('fa-chevron-down');
-                    } else {
-                        accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
-                        accordionContent.style.paddingBottom = '20px';
-                        icon.classList.remove('fa-chevron-down');
-                        icon.classList.add('fa-chevron-up');
+                    // Hide the "Select a theme" message
+                    if (noDomainSelectedMessage) {
+                        noDomainSelectedMessage.style.display = 'none';
                     }
+
+                    // Show only the problem statements for the selected category
+                    problemAccordionItems.forEach(item => {
+                        const itemCategory = item.dataset.category;
+                        if (itemCategory === clickedCategory) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
                 }
             });
         });
@@ -2116,7 +2207,7 @@
             const mainDotPositions = []; // Store top positions of main dots
 
             // 1. Create main dots at each timeline event's vertical center
-            timelineItems.forEach((item) => {
+            timelineItems.forEach((item, index) => {
                 const itemRect = item.getBoundingClientRect();
                 const itemCenterY = (itemRect.top + window.pageYOffset + (itemRect.height / 2)) - containerTopRelativeToViewport;
                 
@@ -2135,6 +2226,7 @@
             const pelletSpacing = 15; // Spacing for small pellets
 
             // 2. Fill gaps with small pellet dots
+            let currentY = 0;
             if (mainDotPositions.length > 0) {
                 // Add pellets from the top of the container to the first main dot
                 for (let y = 0; y < mainDotPositions[0] - (dotSize / 2); y += pelletSpacing) {
@@ -2143,6 +2235,7 @@
                     pellet.style.top = `${y}px`;
                     dotsContainer.appendChild(pellet);
                 }
+                currentY = mainDotPositions[0] + (dotSize / 2);
             }
 
             for (let i = 0; i < mainDotPositions.length; i++) {
@@ -2191,10 +2284,13 @@
                 lastScrollY = scrollY;
 
                 const pacmanRect = pacmanScroller.getBoundingClientRect();
-                
+                const pacmanCenterY = pacmanRect.top + (pacmanRect.height / 2);
+                const eatingZone = 20;
+
                 allDots.forEach(dot => {
                     const dotRect = dot.getBoundingClientRect();
-                    
+                    const dotCenterY = dotRect.top + (dotRect.height / 2);
+
                     if (dot.classList.contains('main-dot')) {
                         if (scrollY + (viewportHeight / 2) > dotRect.top + scrollY) {
                             dot.classList.add('passed');
@@ -2268,50 +2364,9 @@
         }
 
         function startAboutBackgroundSlideshow() {
-            changeAboutBackground(); // Set initial background
-            setInterval(changeAboutBackground, 5000); // Change every 5 seconds
+            changeAboutBackground();
+            setInterval(changeAboutBackground, 5000);
         }
-
-        // Problem Statements Filtering
-        const domainCards = document.querySelectorAll('.domain-card');
-        const problemAccordionItems = document.querySelectorAll('.problem-statements-list .accordion-item');
-        const noDomainSelectedMessage = document.querySelector('.no-domain-selected-message');
-        let currentlySelectedDomain = null;
-
-        domainCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const clickedCategory = card.dataset.category;
-
-                if (currentlySelectedDomain === clickedCategory) {
-                    domainCards.forEach(dc => dc.classList.remove('active'));
-                    currentlySelectedDomain = null;
-                    
-                    problemAccordionItems.forEach(item => {
-                        item.style.display = 'none';
-                    });
-                    if (noDomainSelectedMessage) {
-                        noDomainSelectedMessage.style.display = 'block';
-                    }
-                } else {
-                    domainCards.forEach(dc => dc.classList.remove('active'));
-                    card.classList.add('active');
-                    currentlySelectedDomain = clickedCategory;
-
-                    if (noDomainSelectedMessage) {
-                        noDomainSelectedMessage.style.display = 'none';
-                    }
-
-                    problemAccordionItems.forEach(item => {
-                        const itemCategory = item.dataset.category;
-                        if (itemCategory === clickedCategory) {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    });
-                }
-            });
-        });
 
         // Countdown Timer Logic
         const countdownDate = new Date("Sep 11, 2025 09:00:00").getTime();
@@ -2320,12 +2375,6 @@
             const x = setInterval(function() {
                 const now = new Date().getTime();
                 const distance = countdownDate - now;
-
-                if (distance < 0) {
-                    clearInterval(x);
-                    document.getElementById("countdown-timer").innerHTML = "HACKATHON HAS STARTED!";
-                    return;
-                }
 
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -2337,25 +2386,22 @@
                 document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
                 document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
 
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("countdown-timer").innerHTML = "HACKATHON HAS STARTED!";
+                }
             }, 1000);
         }
 
         // Attach scroll event listener for Pac-Man position and timeline status
         window.addEventListener('scroll', () => {
-            // Only run pacman animation on larger screens
-            if (window.innerWidth > 768) {
-                updatePacmanPosition();
-            }
+            updatePacmanPosition();
             updateTimelineStatus();
         });
-
         window.addEventListener('resize', () => {
             resizeCanvas();
-            // Only regenerate dots on larger screens
-            if (window.innerWidth > 768) {
-                generateTimelineDots();
-                updatePacmanPosition();
-            }
+            generateTimelineDots();
+            updatePacmanPosition();
         });
         
         window.onload = function() {
@@ -2366,4 +2412,3 @@
     </script>
 </body>
 </html>
-
